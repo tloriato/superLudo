@@ -20,16 +20,31 @@ public class PrimFrame extends JFrame {
 		this.setBounds(x,y,LARG_DEFAULT,ALT_DEFAULT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLayout(null);
 		
 		/* Menu Lateral */
-		Panel pRight = new Panel(new GridLayout(6,1));
+		int xMenu = (int)(LARG_DEFAULT * 0.80);
+		int widthMenu = LARG_DEFAULT - xMenu;
+		
+		Panel pRight = new Panel(null);
 		pRight.setBackground(Color.gray);
+		pRight.setBounds(xMenu, 0, widthMenu, ALT_DEFAULT);
 		
 		JButton newGame = new JButton("Novo Jogo");
+		newGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125), (int) (widthMenu * 0.75), 45);
+		
 		JButton loadGame = new JButton("Carregar Jogo");
+		loadGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 25 + 45 * 1, (int) (widthMenu * 0.75), 45);
+		
 		JButton saveGame = new JButton("Salvar");
+		saveGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 50 + 45 * 2, (int) (widthMenu * 0.75), 45);
+		
 		Label currentlyPlaying = new Label("À Jogar:");
+		currentlyPlaying.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 100 + 45 * 3, (int) (widthMenu * 0.75), 45);
+		currentlyPlaying.setAlignment(Label.CENTER);
+		
 		JButton throwDice = new JButton("Lançar Dado");
+		throwDice.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 150 + 45 * 4, (int) (widthMenu * 0.75), 45);
 		
 		pRight.add(newGame);
 		pRight.add(loadGame);
@@ -38,7 +53,7 @@ public class PrimFrame extends JFrame {
 		pRight.add(throwDice);		
 		/*Fim do Menu Lateral */
 		
-		add(pRight, BorderLayout.EAST);
+		add(pRight);
 		
 	}
 
