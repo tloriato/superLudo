@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-
 public class PrimFrame extends JFrame {
 	/**
 	 * Hello World of GUI 
@@ -13,17 +12,24 @@ public class PrimFrame extends JFrame {
 	public PrimFrame() {
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screenSize = tk.getScreenSize();
-
-		int x=screenSize.width/2-LARG_DEFAULT/2;
-		int y=screenSize.height/2-ALT_DEFAULT/2;
+		
+		
+		int sl=screenSize.width;
+		int sa=screenSize.height;
+		int x=sl/2- LARG_DEFAULT/2;
+		int y=sa/2-ALT_DEFAULT/2;
+		//int x=screenSize.width/2-LARG_DEFAULT/2;
+		//int y=screenSize.height/2-ALT_DEFAULT/2;
 		
 		this.setBounds(x,y,LARG_DEFAULT,ALT_DEFAULT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setLayout(null);
+		//this.setLayout(null);
+		
+		
 		
 		/* Menu Lateral */
-		int xMenu = (int)(LARG_DEFAULT * 0.80);
+		int xMenu = (int)(ALT_DEFAULT);
 		int widthMenu = LARG_DEFAULT - xMenu;
 		
 		Panel pRight = new Panel(null);
@@ -39,11 +45,11 @@ public class PrimFrame extends JFrame {
 		JButton saveGame = new JButton("Salvar");
 		saveGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 50 + 45 * 2, (int) (widthMenu * 0.75), 45);
 		
-		Label currentlyPlaying = new Label("À Jogar:");
+		Label currentlyPlaying = new Label("ï¿½ Jogar:");
 		currentlyPlaying.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 100 + 45 * 3, (int) (widthMenu * 0.75), 45);
 		currentlyPlaying.setAlignment(Label.CENTER);
 		
-		JButton throwDice = new JButton("Lançar Dado");
+		JButton throwDice = new JButton("Lanï¿½ar Dado");
 		throwDice.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 150 + 45 * 4, (int) (widthMenu * 0.75), 45);
 		
 		pRight.add(newGame);
@@ -54,6 +60,9 @@ public class PrimFrame extends JFrame {
 		/*Fim do Menu Lateral */
 		
 		add(pRight);
+		
+		getContentPane().add(new Tabuleiro(ALT_DEFAULT));
+		
 		
 	}
 
