@@ -6,10 +6,9 @@ public class PrimFrame extends JFrame {
 	 */
 	
 	private static final long serialVersionUID = 1L;
-	public final int LARG_DEFAULT = 960;
-	public final int ALT_DEFAULT = 720;
 	
-	public PrimFrame() {
+	public PrimFrame(int LARG_DEFAULT, int ALT_DEFAULT) {
+		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screenSize = tk.getScreenSize();
 		
@@ -60,8 +59,6 @@ public class PrimFrame extends JFrame {
 		/*Fim do Menu Lateral */
 		
 		add(pRight);
-		
-		getContentPane().add(new Tabuleiro(ALT_DEFAULT));
 		
 		
 	}
