@@ -1,4 +1,4 @@
-
+	
 
 public class SuperLudo {
 	
@@ -9,6 +9,7 @@ public class SuperLudo {
 	private static PrimFrame f = null;
 	private static SideMenu sideMenu = null;
 	private static Controler controler= null;
+	private static CentralPanel centralPanel = null;
 	
 	public static void main(String[] args) {
 		Pino.initializePinos();
@@ -18,7 +19,7 @@ public class SuperLudo {
 	}
 	
 	private static void createBoard() {
-		CentralPanel centralPanel = new CentralPanel(ALT_DEFAULT);
+		centralPanel = new CentralPanel(ALT_DEFAULT);
 		f = new PrimFrame(LARG_DEFAULT,ALT_DEFAULT);
 		f.getContentPane().add(sideMenu);
 		f.getContentPane().add(centralPanel);

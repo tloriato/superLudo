@@ -7,6 +7,7 @@ import javax.swing.*;
 public class SideMenu extends Panel {
 	
 	private static final long serialVersionUID = -3469803300168088129L;
+	private static PlayingDice playingDice = null;
 
 	public SideMenu(int LARG_DEFAULT, int ALT_DEFAULT) {
 		/* Menu Lateral */
@@ -31,14 +32,14 @@ public class SideMenu extends Panel {
 		currentlyPlaying.setAlignment(Label.CENTER);
 		currentlyPlaying.setFont(new Font("Serif", Font.BOLD, 21));
 		
-		PlayingDice currentlyDice = new PlayingDice((int) (widthMenu * 0.75), (int) (widthMenu * 0.75));
-		currentlyDice.setBounds((int) (widthMenu * 0.175), (int) (ALT_DEFAULT * 0.125) + 150 + 45 * 3, (int) (widthMenu * 0.65), (int) (widthMenu * 0.65));
+		PlayingDice playingDice = new PlayingDice((int) (widthMenu * 0.75), (int) (widthMenu * 0.75));
+		playingDice.setBounds((int) (widthMenu * 0.175), (int) (ALT_DEFAULT * 0.125) + 150 + 45 * 3, (int) (widthMenu * 0.65), (int) (widthMenu * 0.65));
 		
 		JButton throwDice = new JButton("Lançar Dado");
 		throwDice.setBounds((int) (widthMenu * 0.125), ((int) (ALT_DEFAULT * 0.125) + 200 + 45 * 3) + (int) (widthMenu * 0.65), (int) (widthMenu * 0.75), 45);
 		throwDice.addActionListener(new ActionListener() {
 	      public void actionPerformed(ActionEvent e) {
-	    	  System.out.println(currentlyDice.throwDice());
+	    	  System.out.println(playingDice.throwDice());
 	      }
 	    });
 		
@@ -48,6 +49,6 @@ public class SideMenu extends Panel {
 		this.add(saveGame);
 		this.add(currentlyPlaying);
 		this.add(throwDice);
-		this.add(currentlyDice);
+		this.add(playingDice);
 	}
 }
