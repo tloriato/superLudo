@@ -11,7 +11,9 @@ public class SuperLudo {
 		Tabuleiro t = new Tabuleiro(ALT_DEFAULT);
 		initializePinos(t);;
 		
+		SideMenu sideMenu = new SideMenu(LARG_DEFAULT, ALT_DEFAULT);
 		PrimFrame f = new PrimFrame(LARG_DEFAULT,ALT_DEFAULT);
+		f.getContentPane().add(sideMenu);
 		f.getContentPane().add(t);
 		f.setTitle("Super Ludo");
 		f.setVisible(true);
