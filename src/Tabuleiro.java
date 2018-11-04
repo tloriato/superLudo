@@ -45,15 +45,15 @@ public class Tabuleiro extends JPanel {
 		makeTriangle(size*6,size*6,15*size/2,15*size/2,size*6,size*9,g2d,Color.GREEN );
 		makeTriangle(size*9,size*6,15*size/2,15*size/2,size*9,size*9,g2d,Color.BLUE);
 		
-		makeSquare(10*size,1*size,4*size , g2d, Color.WHITE);
-		makeSquare(1*size,10*size,4*size , g2d, Color.WHITE);
-		makeSquare(1*size,1*size,4*size  , g2d, Color.WHITE);
-		makeSquare(10*size,10*size,4*size, g2d, Color.WHITE);
+		makeSquare(10*size,1*size,4*size , g2d, Color.YELLOW);
+		makeSquare(1*size,10*size,4*size , g2d, Color.RED);
+		makeSquare(1*size,1*size,4*size  , g2d, Color.GREEN);
+		makeSquare(10*size,10*size,4*size, g2d, Color.BLUE);
 		
-		makeCenter(11,2,size, g2d , Color.YELLOW);
-		makeCenter(2,11,size, g2d , Color.RED);
-		makeCenter(2,2,size, g2d , Color.GREEN);
-		makeCenter(11,11,size, g2d , Color.BLUE);
+		//makeCenter(11,2,size, g2d , Color.WHITE);
+		//makeCenter(2,11,size, g2d , Color.WHITE);
+		//makeCenter(2,2,size, g2d , Color.WHITE);
+		//makeCenter(11,11,size, g2d , Color.WHITE);
 		
 		for (Pino p : pinos) {
 			drawPin(p,g2d);
@@ -84,8 +84,7 @@ public class Tabuleiro extends JPanel {
 				leftX = leftX +squareSize;
 			}
 			topY = topY +squareSize;
-			leftX = leftX=squareSize*initX;
-			
+			leftX = squareSize*initX;
 		}
 	}
 	
@@ -110,10 +109,7 @@ public class Tabuleiro extends JPanel {
 		Rectangle2D r = new Rectangle2D.Double(x0,y0,size,size);
 		
 		g2d.setPaint(color);
-		g2d.fill(r);
-		
-		g2d.setPaint(Color.BLACK);
-		g2d.draw(r);
+		g2d.fill(r);	
 	}
 	
 	private void makeCenter(int x,int y, int size,Graphics2D g2d,Color color ) {
@@ -135,10 +131,6 @@ public class Tabuleiro extends JPanel {
 		
 		g2d.setPaint(Color.WHITE);
 		g2d.fill(circ);
-		g2d.setPaint(p.color);
-		g2d.setStroke(new BasicStroke((float) 1.5));
-		g2d.draw(circ);
-		g2d.setStroke(new BasicStroke(1));
 		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius*0.8,centerY+this.pinRadius*0.8);
 		g2d.setPaint(p.color);
 		g2d.fill(circ);
