@@ -132,14 +132,16 @@ public class Tabuleiro extends JPanel {
 		double centerY = (p.posY+0.5)*this.squareSize;
 		Ellipse2D circ= new Ellipse2D.Double();
 		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius,centerY+this.pinRadius);
-
+		
+		g2d.setPaint(Color.WHITE);
+		g2d.fill(circ);
+		g2d.setPaint(p.color);
+		g2d.setStroke(new BasicStroke((float) 1.5));
+		g2d.draw(circ);
+		g2d.setStroke(new BasicStroke(1));
+		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius*0.8,centerY+this.pinRadius*0.8);
 		g2d.setPaint(p.color);
 		g2d.fill(circ);
-		g2d.setPaint(Color.BLACK);
-		g2d.draw(circ);
-		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius*0.8,centerY+this.pinRadius*0.8);
-		g2d.setPaint(Color.WHITE);
-		g2d.draw(circ);
 	}
 	
 }
