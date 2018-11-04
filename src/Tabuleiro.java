@@ -1,34 +1,31 @@
-import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.ArrayList;
 
-public class Tabuleiro extends JPanel {
+public class Tabuleiro {
 	/**
 	 * 
 	 */
 	//private static final long serialVersionUID = 1L;
 	private int boardSize;
-	private double squareSize;
-	private double pinRadius;
-	public ArrayList<Pino> pinos = new ArrayList();
+	private int squareSize;
 	//private int squareNumbers=15;
 	
 	public Tabuleiro(int size) {
 		this.boardSize = size;
-		this.squareSize=(1.0*this.boardSize)/15;
-		this.pinRadius = squareSize*0.4;
+		this.squareSize=this.boardSize/15;
 	}
 	
-	public void paintComponent(Graphics g) {
+	public int getSquareSize() {
+		return squareSize;
+	}
+	
+	public void drawBoard(Graphics2D g2d) {
 		//super.paintComponent(g);
 		//g.drawString("Primeiro Programa Gráfico",TXT_X,TXT_Y);
-		super.paintComponent(g);
-		Graphics2D g2d=(Graphics2D) g;
 		
 		Rectangle2D[][] board=new Rectangle2D[15][15];
 		
-		int size = (int) this.squareSize;
+		int size = this.squareSize;
 		
 		makeSquare(9*size,0,6*size, g2d, Color.YELLOW);
 		makeSquare(0,9*size,6*size, g2d, Color.RED);
@@ -45,19 +42,16 @@ public class Tabuleiro extends JPanel {
 		makeTriangle(size*6,size*6,15*size/2,15*size/2,size*6,size*9,g2d,Color.GREEN );
 		makeTriangle(size*9,size*6,15*size/2,15*size/2,size*9,size*9,g2d,Color.BLUE);
 		
+		makeSquare(10*size,1*size,4*size , g2d, Color.WHITE);
+		makeSquare(1*size,10*size,4*size , g2d, Color.WHITE);
+		makeSquare(1*size,1*size,4*size  , g2d, Color.WHITE);
+		makeSquare(10*size,10*size,4*size, g2d, Color.WHITE);
+		
 		makeSquare(10*size,1*size,4*size , g2d, Color.YELLOW);
 		makeSquare(1*size,10*size,4*size , g2d, Color.RED);
 		makeSquare(1*size,1*size,4*size  , g2d, Color.GREEN);
 		makeSquare(10*size,10*size,4*size, g2d, Color.BLUE);
 		
-		//makeCenter(11,2,size, g2d , Color.WHITE);
-		//makeCenter(2,11,size, g2d , Color.WHITE);
-		//makeCenter(2,2,size, g2d , Color.WHITE);
-		//makeCenter(11,11,size, g2d , Color.WHITE);
-		
-		for (Pino p : pinos) {
-			drawPin(p,g2d);
-		}
 		
 	}
 	
@@ -109,7 +103,8 @@ public class Tabuleiro extends JPanel {
 		Rectangle2D r = new Rectangle2D.Double(x0,y0,size,size);
 		
 		g2d.setPaint(color);
-		g2d.fill(r);	
+		g2d.fill(r);
+		
 	}
 	
 	private void makeCenter(int x,int y, int size,Graphics2D g2d,Color color ) {
@@ -119,21 +114,5 @@ public class Tabuleiro extends JPanel {
 		makeSquare(x*size,(y+1)*size,size, g2d, color);
 	}
 	
-	public void addPin(Pino p) {
-		this.pinos.add(p);
-	}
-	
-	private void drawPin(Pino p, Graphics2D g2d) {
-		double centerX = (p.posX+0.5)*this.squareSize;
-		double centerY = (p.posY+0.5)*this.squareSize;
-		Ellipse2D circ= new Ellipse2D.Double();
-		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius,centerY+this.pinRadius);
-		
-		g2d.setPaint(Color.WHITE);
-		g2d.fill(circ);
-		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius*0.8,centerY+this.pinRadius*0.8);
-		g2d.setPaint(p.color);
-		g2d.fill(circ);
-	}
 	
 }
