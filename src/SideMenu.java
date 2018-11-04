@@ -10,6 +10,7 @@ public class SideMenu extends Panel {
 		int xMenu = (int)(ALT_DEFAULT);
 		int widthMenu = LARG_DEFAULT - xMenu;
 		
+		this.setLayout(null);
 		this.setBackground(Color.gray);
 		this.setBounds(xMenu, 0, widthMenu, ALT_DEFAULT);
 		
