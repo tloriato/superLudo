@@ -28,13 +28,19 @@ public class SideMenu extends Panel {
 		currentlyPlaying.setAlignment(Label.CENTER);
 		currentlyPlaying.setFont(new Font("Serif", Font.BOLD, 21));
 		
+		PlayingDice currentlyDice = new PlayingDice((int) (widthMenu * 0.75), (int) (widthMenu * 0.75));
+		currentlyDice.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 150 + 45 * 3, (int) (widthMenu * 0.75), (int) (widthMenu * 0.75));
+		
 		JButton throwDice = new JButton("Lançar Dado");
-		throwDice.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 150 + 45 * 4, (int) (widthMenu * 0.75), 45);
+		throwDice.setBounds((int) (widthMenu * 0.125), ((int) (ALT_DEFAULT * 0.125) + 200 + 45 * 3) + (int) (widthMenu * 0.75), (int) (widthMenu * 0.75), 45);
+		
+		
 		
 		this.add(newGame);
 		this.add(loadGame);
 		this.add(saveGame);
 		this.add(currentlyPlaying);
-		this.add(throwDice);					
+		this.add(throwDice);
+		this.add(currentlyDice);
 	}
 }
