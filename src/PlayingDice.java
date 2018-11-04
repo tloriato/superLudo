@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 @SuppressWarnings("serial")
@@ -16,7 +15,7 @@ public class PlayingDice extends Panel {
 	public PlayingDice(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.dice = 0;
+		this.dice = 6;
 		
 		for (int i = 0; i < 6; i++) {
 			String path = "resources/Dado" + (i+1) + ".png";
@@ -33,7 +32,12 @@ public class PlayingDice extends Panel {
 	public void paint(Graphics g) {
 		g.setColor(Color.red);
 		g.fillRect(0, 0, width, height);
-		g.drawImage(this.image[this.dice], 29, 26, this);
+		g.drawImage(this.image[this.dice - 1], 29, 26, this);
 	}
-
+	
+	public int throwDice() {
+		this.dice = (int)(Math.random() * 6 + 1);
+		this.repaint();
+		return this.dice;
+	}
 }

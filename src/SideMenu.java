@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 public class SideMenu extends Panel {
@@ -31,10 +34,13 @@ public class SideMenu extends Panel {
 		PlayingDice currentlyDice = new PlayingDice((int) (widthMenu * 0.75), (int) (widthMenu * 0.75));
 		currentlyDice.setBounds((int) (widthMenu * 0.175), (int) (ALT_DEFAULT * 0.125) + 150 + 45 * 3, (int) (widthMenu * 0.65), (int) (widthMenu * 0.65));
 		
-		
 		JButton throwDice = new JButton("Lançar Dado");
 		throwDice.setBounds((int) (widthMenu * 0.125), ((int) (ALT_DEFAULT * 0.125) + 200 + 45 * 3) + (int) (widthMenu * 0.65), (int) (widthMenu * 0.75), 45);
-		
+		throwDice.addActionListener(new ActionListener() {
+	      public void actionPerformed(ActionEvent e) {
+	    	  System.out.println(currentlyDice.throwDice());
+	      }
+	    });
 		
 		
 		this.add(newGame);
