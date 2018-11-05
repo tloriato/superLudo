@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.2.2" icons="true" automaticImage="PNG" generate-combined-fragments="true">  
+  <object id="1" language="java" name="SuperLudo" project="1610937-1611434" file="/1610937-1611434/src/SuperLudo.java" 
+    binary="false" label="superLudo" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="75" y="0"/>    
+    <execution id="2">      
+      <position height="74" width="0" x="0" y="115"/>    
+    </execution>    
+    <execution id="6">      
+      <position height="21" width="0" x="0" y="147"/>    
+    </execution>  
+  </object>  
+  <object id="7" language="java" name="Pino" project="1610937-1611434" file="/1610937-1611434/src/Pino.java" 
+    binary="false" label="pino" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="186" y="0"/>    
+    <execution id="4">      
+      <position height="21" width="80" x="94" y="136"/>    
+    </execution>    
+    <execution id="8">      
+      <position height="84" width="0" x="0" y="176"/>    
+    </execution>    
+    <execution id="10">      
+      <position height="21" width="0" x="0" y="218"/>    
+    </execution>  
+  </object>  
+  <object id="11" language="java" name="SideMenu" project="1610937-1611434" file="/1610937-1611434/src/SideMenu.java" 
+    binary="false" label="sideMenu" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="239" y="0"/>  
+  </object>  
+  <message id="3" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5" operation="main(java.lang.String[]):void" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="9" operation="initializePinos():void" asynchronous="false">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="10"/>  
+  </message>
+</sequence-diagram>
