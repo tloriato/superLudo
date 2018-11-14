@@ -13,10 +13,12 @@ public class Controler implements  MouseListener {
 		y = e.getY();
 		
 		int posX = x / 48;
-		int posY = y/48;
+		int posY = (y - 26) /48;
 		
-		//System.out.println(x);
-		//System.out.println(y);
+		System.out.println(x);
+		System.out.println(y);
+		System.out.println(posX);
+		System.out.println(posY);
 		Movement.select(posX, posY);
 	}
 
