@@ -1,8 +1,11 @@
+package View;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import Services.PlayingDice;
 
 public class SideMenu extends Panel {
 	
@@ -27,7 +30,7 @@ public class SideMenu extends Panel {
 		JButton saveGame = new JButton("Salvar");
 		saveGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 50 + 45 * 2, (int) (widthMenu * 0.75), 45);
 		
-		Label currentlyPlaying = new Label("À Jogar:");
+		Label currentlyPlaying = new Label("ï¿½ Jogar:");
 		currentlyPlaying.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 100 + 45 * 3, (int) (widthMenu * 0.75), 45);
 		currentlyPlaying.setAlignment(Label.CENTER);
 		currentlyPlaying.setFont(new Font("Serif", Font.BOLD, 21));
@@ -35,7 +38,7 @@ public class SideMenu extends Panel {
 		PlayingDice playingDice = new PlayingDice((int) (widthMenu * 0.75), (int) (widthMenu * 0.75));
 		playingDice.setBounds((int) (widthMenu * 0.175), (int) (ALT_DEFAULT * 0.125) + 150 + 45 * 3, (int) (widthMenu * 0.65), (int) (widthMenu * 0.65));
 		
-		JButton throwDice = new JButton("Lançar Dado");
+		JButton throwDice = new JButton("Lanï¿½ar Dado");
 		throwDice.setBounds((int) (widthMenu * 0.125), ((int) (ALT_DEFAULT * 0.125) + 200 + 45 * 3) + (int) (widthMenu * 0.65), (int) (widthMenu * 0.75), 45);
 		throwDice.addActionListener(new ActionListener() {
 	      public void actionPerformed(ActionEvent e) {

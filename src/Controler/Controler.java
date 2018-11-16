@@ -1,5 +1,8 @@
+package Controler;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import Services.Movement;
 
 
 public class Controler implements  MouseListener {
@@ -15,10 +18,10 @@ public class Controler implements  MouseListener {
 		int posX = x / 48;
 		int posY = (y - 26) /48;
 		
-		System.out.println(x);
-		System.out.println(y);
-		System.out.println(posX);
-		System.out.println(posY);
+		//System.out.println(x);
+		//System.out.println(y);
+		//System.out.println(posX);
+		//System.out.println(posY);
 		Movement.select(posX, posY);
 	}
 

@@ -1,4 +1,10 @@
+package View;
 import javax.swing.JPanel;
+
+import Models.Pin;
+import Models.Player;
+import Services.GameState;
+
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
@@ -22,10 +28,11 @@ public class CentralPanel extends JPanel {
 		Graphics2D g2d=(Graphics2D) g;
 		this.t.drawBoard(g2d);
 		
-		int squareSize= this.t.getSquareSize();
-		for (Pino p : Pino.pinos) {
-				p.drawPin(g2d, squareSize);
+		for (Player pl : GameState.getPlayers() ) {
+			for(Pin pi : pl.getPins()){
+				this.t.drawPin(g2d, pi.getPosX(),pi.getPosY(),pl.getNumber());
 			}
+		}
 	}
 	
 }
