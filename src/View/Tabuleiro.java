@@ -67,9 +67,9 @@ public class Tabuleiro {
 		else if(playerNumber == 2)
 			color = Color.YELLOW;
 		else if(playerNumber == 3) 
-			color = Color.RED;
-		else 
 			color = Color.BLUE;
+		else 
+			color = Color.RED;
 
 		Ellipse2D circ= new Ellipse2D.Double();
 		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius,centerY+pinRadius);
