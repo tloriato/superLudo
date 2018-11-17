@@ -1,6 +1,12 @@
 package Services;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
+import Models.Pin;
 import Models.Player;
+import View.ViewMaster;
 
 public class GameState {
 	private static Player[] players= new Player[4];
@@ -62,4 +68,50 @@ public class GameState {
 	public static void addCountSix() {
 		countSix++;
 	}
+	
+	// Modelo fullState(quebras de linhas somente para visualização):
+	// TP,RN,LD,CS
+	// N,XY,XY,XY,XY
+	// N,XY,XY,XY,XY
+	// N,XY,XY,XY,XY
+	// N,XY,XY,XY,XY
+	// A primeira linha cuida das variáveis globais de estado do jogo como descritos na classe
+	// N é o numero de cada player, e XY as coordenadas de cada peão dos jogadores
+	
+	// retorna uma String no modelo fullState
+	public static String getFullState() {
+		List<String> state = new ArrayList<>();
+		state.add(Integer.toString(turnPlayer));
+		state.add(Integer.toString(round));
+		state.add(Integer.toString(lastDice));
+		state.add(Integer.toString(countSix));
+		for (Player player: players) {
+			state.add(Integer.toString(player.getNumber()));
+			for (Pin pin: player.getPins()) {
+				state.add(Integer.toString(pin.getPosX()));
+				state.add(Integer.toString(pin.getPosY()));
+			}
+		}
+		return String.join(",", state);
+	}
+
+	public static void loadState(String fullLoadedState) {
+		String[] st = fullLoadedState.split(",");
+		Player playerOne = new Player(st[4], st[5], st[6], st[7], st[8], st[9], st[10], st[11], st[12]);
+		Player playerTwo = new Player(st[13], st[14], st[15], st[16], st[17], st[18], st[19], st[20], st[21]);
+		Player playerThree = new Player(st[22], st[23], st[24], st[25], st[26], st[27], st[28], st[29], st[30]);
+		Player playerFour = new Player(st[31], st[32], st[33], st[34], st[35], st[36], st[37], st[38], st[39]);
+		
+		GameState.turnPlayer = Integer.parseInt(st[0]); 
+		GameState.round = Integer.parseInt(st[1]);
+		GameState.lastDice = Integer.parseInt(st[2]);
+		GameState.countSix = Integer.parseInt(st[3]);
+		GameState.players[0] = playerOne;
+		GameState.players[1] = playerTwo;
+		GameState.players[2] = playerThree;
+		GameState.players[3] = playerFour;
+		
+		ViewMaster.refreshBoard();
+	}
+	
 }

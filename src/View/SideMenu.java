@@ -2,16 +2,75 @@ package View;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
+import Services.GameState;
 import Services.PlayingDice;
 
 public class SideMenu extends Panel {
 	
 	private static final long serialVersionUID = -3469803300168088129L;
 	private static PlayingDice playingDice = null;
-
+	
+	private ActionListener saveDialog = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // Abre no diretório Desktop
+			fileChooser.setDialogTitle("Onde desejar salvar o jogo: ");
+			fileChooser.setAcceptAllFileFilterUsed(false);												// Filtra para mostrar arquivos .ssf
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("SuperLudo Save File", "ssf");
+			fileChooser.addChoosableFileFilter(filter);													// Amarra filtro à janela
+			int file = fileChooser.showSaveDialog(null);												// Efetivamente abre a janela
+			if (file == JFileChooser.APPROVE_OPTION) {
+				String saveFilePath = fileChooser.getSelectedFile().toString();							// Monta string do arquivo pra salvar
+				if (!saveFilePath.substring(saveFilePath.length() - 4).equals(".ssf")) {
+					System.out.println(saveFilePath.substring(saveFilePath.length() - 4));
+					saveFilePath = saveFilePath + ".ssf";
+				}
+				try {
+					BufferedWriter writer = new BufferedWriter(new FileWriter(saveFilePath));
+					writer.write(GameState.getFullState());														
+					writer.close();
+					JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso!", "Arquivo salvo", JOptionPane.INFORMATION_MESSAGE);
+				} catch (IOException err) {
+					err.printStackTrace();
+				}
+			}
+		}
+	};
+	
+	private ActionListener loadDialog = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+			fileChooser.setDialogTitle("Arquivo para carregar o jogo: ");
+			fileChooser.setAcceptAllFileFilterUsed(false);			
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("SuperLudo Save File", "ssf");
+			fileChooser.addChoosableFileFilter(filter);
+			int file = fileChooser.showOpenDialog(null);
+			if (file == JFileChooser.APPROVE_OPTION) {
+				String loadFilePath = fileChooser.getSelectedFile().toString();
+				if (!loadFilePath.substring(loadFilePath.length() - 4).equals(".ssf")) {
+					JOptionPane.showMessageDialog(null, "Arquivo não compatível", "Extensão errada!", JOptionPane.ERROR_MESSAGE);
+				} else {
+					try {
+						BufferedReader reader = new BufferedReader(new FileReader(loadFilePath));
+						String fullLoadedState = reader.readLine();
+						GameState.loadState(fullLoadedState);
+					} catch (IOException err) {
+						err.printStackTrace();
+					}
+				}
+			}
+		}
+	};
+	
 	public SideMenu(int LARG_DEFAULT, int ALT_DEFAULT) {
 		/* Menu Lateral */
 		int xMenu = (int)(ALT_DEFAULT);
@@ -26,9 +85,11 @@ public class SideMenu extends Panel {
 		
 		JButton loadGame = new JButton("Carregar Jogo");
 		loadGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 25 + 45 * 1, (int) (widthMenu * 0.75), 45);
+		loadGame.addActionListener(loadDialog);
 		
 		JButton saveGame = new JButton("Salvar");
 		saveGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 50 + 45 * 2, (int) (widthMenu * 0.75), 45);
+		saveGame.addActionListener(saveDialog);
 		
 		Label currentlyPlaying = new Label("ï¿½ Jogar:");
 		currentlyPlaying.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 100 + 45 * 3, (int) (widthMenu * 0.75), 45);
