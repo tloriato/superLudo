@@ -13,7 +13,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import Services.GameState;
-import Services.PlayingDice;
 
 public class SideMenu extends Panel {
 	
@@ -22,11 +21,11 @@ public class SideMenu extends Panel {
 	
 	private ActionListener saveDialog = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // Abre no diretório Desktop
+			JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // Abre no diretï¿½rio Desktop
 			fileChooser.setDialogTitle("Onde desejar salvar o jogo: ");
 			fileChooser.setAcceptAllFileFilterUsed(false);												// Filtra para mostrar arquivos .ssf
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("SuperLudo Save File", "ssf");
-			fileChooser.addChoosableFileFilter(filter);													// Amarra filtro à janela
+			fileChooser.addChoosableFileFilter(filter);													// Amarra filtro ï¿½ janela
 			int file = fileChooser.showSaveDialog(null);												// Efetivamente abre a janela
 			if (file == JFileChooser.APPROVE_OPTION) {
 				String saveFilePath = fileChooser.getSelectedFile().toString();							// Monta string do arquivo pra salvar
@@ -57,7 +56,7 @@ public class SideMenu extends Panel {
 			if (file == JFileChooser.APPROVE_OPTION) {
 				String loadFilePath = fileChooser.getSelectedFile().toString();
 				if (!loadFilePath.substring(loadFilePath.length() - 4).equals(".ssf")) {
-					JOptionPane.showMessageDialog(null, "Arquivo não compatível", "Extensão errada!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Arquivo nï¿½o compatï¿½vel", "Extensï¿½o errada!", JOptionPane.ERROR_MESSAGE);
 				} else {
 					try {
 						BufferedReader reader = new BufferedReader(new FileReader(loadFilePath));
@@ -103,7 +102,7 @@ public class SideMenu extends Panel {
 		throwDice.setBounds((int) (widthMenu * 0.125), ((int) (ALT_DEFAULT * 0.125) + 200 + 45 * 3) + (int) (widthMenu * 0.65), (int) (widthMenu * 0.75), 45);
 		throwDice.addActionListener(new ActionListener() {
 	      public void actionPerformed(ActionEvent e) {
-	    	  System.out.println(playingDice.throwDice());
+	    	  playingDice.throwDice();
 	      }
 	    });
 		

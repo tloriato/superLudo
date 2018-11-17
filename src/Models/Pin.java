@@ -2,42 +2,49 @@ package Models;
 
 public class Pin {
 	
-	private int posX;
-	private int posY;
+	private int pathNum;
+	private Path path;
+	private int initialPos;
 	
-	public Pin(int posX,int posY) {
-		this.posX=posX;
-		this.posY=posY;
+	
+	public Pin(int pinNum) {
+		this.path = Path.Begin;
+		this.pathNum = pinNum;
+		this.initialPos = this.pathNum ; 
 	}
 	
-	public void setPosition(int posX,int posY) {
-		this.posX=posX;
-		this.posY=posY;
+	public Path getPathType() {
+		return this.path;
 	}
 	
-	public int getPosX() {
-		return posX;
+	public int getPathNum() {
+		return this.pathNum;
 	}
 	
-	public int getPosY() {
-		return posY;
+	public void setPath(Path path) {
+		this.path= path;
 	}
+	
+	public void setPathNum(int num) {
+		this.pathNum= num;
+	}	
 	
 	public boolean isBeginZone() {
-		if(posX < 6 && posY < 6)
-			return true;
-		if(posX < 6 && posY > 8)
-			return true;
-		if(posX > 8 && posY < 6)
-			return true;
-		if(posX > 8 && posY > 8)
+		if(this.path == Path.Begin)
 			return true;
 		return false;
 	}
 	
 	public boolean isEndZone() {
-		if(posX > 5 && posX < 9 && posY >5 && posY < 9)
+		if(this.path==Path.End)
 			return true;
 		return false;
+	}
+	
+	public void sendHome() {
+		if(this.path == Path.End)
+			return;
+		this.path=Path.Begin;
+		this.pathNum=this.initialPos;
 	}
 }

@@ -55,32 +55,7 @@ public class Tabuleiro {
 		
 		
 	}
-	
-	public void drawPin(Graphics2D g2d, int posX, int posY, int playerNumber) {
-		double centerX = (posX+0.5)*this.squareSize;
-		double centerY = (posY+0.5)*this.squareSize;
-		double pinRadius = this.squareSize*0.45;
-		Color color;
-		
-		if(playerNumber == 1) 
-			color = Color.GREEN;
-		else if(playerNumber == 2)
-			color = Color.YELLOW;
-		else if(playerNumber == 3) 
-			color = Color.BLUE;
-		else 
-			color = Color.RED;
 
-		Ellipse2D circ= new Ellipse2D.Double();
-		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius,centerY+pinRadius);
-		
-		g2d.setPaint(Color.WHITE);
-		g2d.fill(circ);
-		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius*0.8,centerY+pinRadius*0.8);
-		g2d.setPaint(color);
-		g2d.fill(circ);
-		
-	}
 	
 	private void makePath(int initX,int endX,int initY,int endY, Rectangle2D[][] board, Graphics2D g2d, Color color) {
 		double leftX=squareSize*initX;

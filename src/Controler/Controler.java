@@ -3,6 +3,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import Services.Movement;
+import View.DrawPin;
 
 
 public class Controler implements  MouseListener {
@@ -22,7 +23,7 @@ public class Controler implements  MouseListener {
 		//System.out.println(y);
 		//System.out.println(posX);
 		//System.out.println(posY);
-		Movement.select(posX, posY);
+		DrawPin.findPin(posX, posY);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package Services;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import Models.Pin;
 import Models.Player;
@@ -37,11 +38,11 @@ public class GameState {
 	
 	public static void setDice(int num) {
 		lastDice = num;
+		System.out.println(lastDice);
 	}
 	
 	public static int getDice() {
-		return 5;
-		//return lastDice;
+		return lastDice;
 	}
 	
 	public static void nextTurn() {
@@ -69,14 +70,14 @@ public class GameState {
 		countSix++;
 	}
 	
-	// Modelo fullState(quebras de linhas somente para visualização):
+	// Modelo fullState(quebras de linhas somente para visualizaï¿½ï¿½o):
 	// TP,RN,LD,CS
 	// N,XY,XY,XY,XY
 	// N,XY,XY,XY,XY
 	// N,XY,XY,XY,XY
 	// N,XY,XY,XY,XY
-	// A primeira linha cuida das variáveis globais de estado do jogo como descritos na classe
-	// N é o numero de cada player, e XY as coordenadas de cada peão dos jogadores
+	// A primeira linha cuida das variï¿½veis globais de estado do jogo como descritos na classe
+	// N ï¿½ o numero de cada player, e XY as coordenadas de cada peï¿½o dos jogadores
 	
 	// retorna uma String no modelo fullState
 	public static String getFullState() {
@@ -88,8 +89,8 @@ public class GameState {
 		for (Player player: players) {
 			state.add(Integer.toString(player.getNumber()));
 			for (Pin pin: player.getPins()) {
-				state.add(Integer.toString(pin.getPosX()));
-				state.add(Integer.toString(pin.getPosY()));
+				//state.add(Integer.toString(pin.getPosX()));
+				//state.add(Integer.toString(pin.getPosY()));
 			}
 		}
 		return String.join(",", state);

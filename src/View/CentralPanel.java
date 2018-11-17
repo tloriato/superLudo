@@ -28,11 +28,8 @@ public class CentralPanel extends JPanel {
 		Graphics2D g2d=(Graphics2D) g;
 		this.t.drawBoard(g2d);
 		
-		for (Player pl : GameState.getPlayers() ) {
-			for(Pin pi : pl.getPins()){
-				this.t.drawPin(g2d, pi.getPosX(),pi.getPosY(),pl.getNumber());
-			}
-		}
+		DrawPin.drawPins(g2d,t.getSquareSize());
+
 	}
 	
 }
