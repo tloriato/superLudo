@@ -7,6 +7,7 @@ public class GameState {
 	private static int turnPlayer;
 	private static int round;
 	private static int lastDice;
+	private static int countSix;
 	
 	public static void initializeGame() {
 		players[0] = new Player(1,2,2);
@@ -16,6 +17,7 @@ public class GameState {
 		turnPlayer = 0;
 		lastDice = 0;
 		round = 0;
+		countSix = 0;
 	}
 	
 	public static Player getTurnPlayer() {
@@ -46,10 +48,18 @@ public class GameState {
 		if(round == 0) 
 			firstTurn();
 		lastDice = 0;
+		countSix =0;
 	}
 	
 	public static void firstTurn() {
-		Movement.FirstMove (players[turnPlayer]);
+		Movement.firstMove (players[turnPlayer]);
 	}
 	
+	public static int getCountSix() {
+		return countSix;
+	}
+	
+	public static void addCountSix() {
+		countSix++;
+	}
 }

@@ -29,4 +29,12 @@ public class Player {
 	public int getNumber() {
 		return this.playerNumber;
 	}
+	
+	public Pin getBeginPin() {
+		for (Pin p: pins) {
+			if(p.isBeginZone())
+				return p;
+		}
+		return null;
+	}
 }
