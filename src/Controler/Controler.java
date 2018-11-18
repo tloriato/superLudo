@@ -4,6 +4,7 @@ import java.awt.event.MouseListener;
 
 import Services.Movement;
 import View.DrawPin;
+import View.PlayingDice;
 
 
 public class Controler implements  MouseListener {
@@ -23,7 +24,8 @@ public class Controler implements  MouseListener {
 		//System.out.println(y);
 		//System.out.println(posX);
 		//System.out.println(posY);
-		DrawPin.findPin(posX, posY);
+		if(PlayingDice.isStable()) 
+			DrawPin.findPin(posX, posY);
 	}
 
 	@Override

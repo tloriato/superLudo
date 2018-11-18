@@ -3,10 +3,12 @@ package View;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 import Models.Path;
 import Models.Pin;
 import Models.Player;
+import Services.Barrier;
 import Services.GameState;
 import Services.Movement;
 
@@ -14,6 +16,8 @@ public class DrawPin {
 	
 	private static Pin pins[] = new Pin[16];
 	private static int positions[][] = new int[16][2];
+	private static int shelter[][] = new int[4][2];
+	private static int exit[][] = new int[4][2];
 	
 	public static void drawPins(Graphics2D g2d, int squareSize) {
 		
@@ -28,9 +32,38 @@ public class DrawPin {
 			}
 		}
 		
+		ArrayList<Barrier> b =Barrier.getBarriers();
+		System.out.println(b);
+		System.out.println(b.size());
+		for(int i=0;i<b.size();i++) {
+			drawBarrier(g2d, b.get(i),squareSize);
+		}
+		
 		
 	}
+	
+	private static void drawBarrier(Graphics2D g2d,Barrier b ,int squareSize){
+		Color color = getColor(b.getPlayer().getNumber());
+		Path path = b.getPath();
+
+		int pos[] = getPos(path, b.getPlayer().getNumber(), b.getPos());
 		
+		double centerX = (pos[0]+0.5)*squareSize;
+		double centerY = (pos[1]+0.5)*squareSize;
+		double pinRadius = squareSize*0.3;
+	
+
+		Ellipse2D circ= new Ellipse2D.Double();
+		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius,centerY+pinRadius);
+		
+		g2d.setPaint(Color.WHITE);
+		g2d.fill(circ);
+		circ.setFrameFromCenter(centerX ,centerY,centerX+pinRadius*0.8,centerY+pinRadius*0.8);
+		g2d.setPaint(color);
+		g2d.fill(circ);
+		
+		
+	}
 	private static int[] drawPin(Graphics2D g2d, Pin p,int squareSize,int playerNumber) {
 			
 		Color color = getColor(playerNumber);

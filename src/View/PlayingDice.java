@@ -19,6 +19,8 @@ public class PlayingDice extends Panel {
 	private static int blink;
 	private BufferedImage[] image = new BufferedImage[6];
 	
+	private static boolean stable;
+	
 	public PlayingDice(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -48,6 +50,7 @@ public class PlayingDice extends Panel {
 	}
 	
 	public void throwDice() {
+		stable = false;
 		new Thread(new Runnable() {
 			public void run() {
 				if(DiceLogic.runDice()) {
@@ -59,8 +62,9 @@ public class PlayingDice extends Panel {
 				else {
 					System.out.println("Dado ja foi jogado");
 				}
+				stable = true;
 			}
-		}).start();	
+		}).start();
 	}
 	
 	private void animate() {
@@ -96,5 +100,9 @@ public class PlayingDice extends Panel {
 		}
 		blink++;
 		repaint();
+	}
+	
+	public static boolean isStable() {
+		return stable;
 	}
 }

@@ -53,6 +53,11 @@ public class Tabuleiro {
 		makeSquare(1*size,1*size,4*size  , g2d, Color.GREEN);
 		makeSquare(10*size,10*size,4*size, g2d, Color.BLUE);
 		
+		makeSquare(1*size,8*size,size , g2d, Color.BLACK);
+		makeSquare(13*size,6*size,size , g2d, Color.BLACK);
+		makeSquare(6*size,size,size  , g2d, Color.BLACK);
+		makeSquare(8*size,13*size,size, g2d, Color.BLACK);
+		
 		
 	}
 

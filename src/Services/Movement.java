@@ -11,14 +11,13 @@ public class Movement {
 	
 	public static void select(Pin pin) {
 		int dice =GameState.getDice();
-		if(dice==5) {
-			if(moveFive())
-				return;
-		}
-		if(pin.isBeginZone() || pin.isEndZone())
+		if(forcedMove())
 			return;
 		if(dice==0) {
 			System.out.println("Jogue o Dado");
+			return;
+		}
+		if(!checkForMove(pin)) {
 			return;
 		}
 		if(!GameState.getTurnPlayer().isPinOwner(pin)) {
@@ -35,61 +34,67 @@ public class Movement {
 			pin.sendHome();
 		}
 		GameState.nextTurn();
-		
-		/*System.out.println(selected);
-		int dice = GameState.getDice();
-		if(dice==0) {
-			System.out.println("Jogue o Dado");
-			return;
-		}
+	}
+	
+	public static boolean forcedMove() {
+		int dice =GameState.getDice();
 		if(dice==5) {
-			moveFive();
+			return moveFive();
 		}
-		
-		if(selected != null) {
-			if(move(posX,posY));{
-				if(dice == 6) {
-					GameState.addCountSix();
-					if (GameState.getCountSix()<3) {
-						lastSelected = selected;
-						GameState.setDice(0);
-					}
-					else {
-						moveBegin();
-						GameState.nextTurn();
-					}
-				}
-				else{
-					GameState.nextTurn();
-				}
-			}
-			selected = null;
-		}
-		
-		else {
-			selected = GameState.getTurnPlayer().checkForPin(posX, posY);
-			if(selected != null) {
-				if(selected.isBeginZone() || selected.isEndZone()) {
-					selected = null;
-					System.out.println("Nao Pode Movimentar esse pino");
-				}
-			}
-		}
-		System.out.println(selected);*/
+		return false;
 	}
 	
 	private static void move (Pin p) {
 		int destiny = p.getPathNum() + GameState.getDice();
-		if(destiny>51)
-			destiny= destiny -51;
-		p.setPathNum(destiny);
-		ViewMaster.refreshBoard();
+		int playerNum = GameState.getTurnPlayer().getNumber();
+		Barrier.leaveBarrier(p);
+		
+		if(p.getPathType() == Path.Common) {
+			if(enterLastRoad( playerNum,destiny, p.getPathNum(), p))
+				return;
+			if(destiny>51)
+				destiny= destiny -51;
+			p.setPathNum(destiny);
+		}
+		
+		if(p.getPathType() == Path.LastRoad) {
+			//if()
+		}
+		
+		endMove(p);
 		/*if(checkForMove(posX, posY)) {
 			selected.setPosition(posX, posY);
 			ViewMaster.refreshBoard();
 			return true;
 		}
 		return false;*/
+	}
+	
+	private static boolean enterLastRoad(int playerNum, int destiny, int originalPos, Pin p) {
+		int enterHouse = lastRoadEntrace(playerNum);
+		if(destiny > enterHouse && originalPos < enterHouse ){
+			int diff = destiny - enterHouse;
+			if(diff==6)
+				p.setPath(Path.End);
+			else {
+				p.setPath(Path.LastRoad);
+				p.setPathNum(destiny - enterHouse);
+			}
+			endMove(p);
+			return true;
+		}
+		return false;
+	}
+	
+	public static int lastRoadEntrace(int playerNum) {
+		if(playerNum == 1) 
+			return 50;
+		if(playerNum == 2) 
+			return 11;
+		if(playerNum == 3) 
+			return 24;
+		else
+			return 37;
 	}
 	
 	static void firstMove (Player player) {
@@ -127,7 +132,41 @@ public class Movement {
 	}
 
 	
-	private static boolean checkForMove(int posX, int posY) {
+	private static boolean checkForMove(Pin p) {
+		int dice = GameState.getDice();
+		int initial = p.getPathNum();
+		if(p.isBeginZone() || p.isEndZone())
+			return false;
+		if(p.getPathType() == Path.LastRoad) {
+			if(initial + dice >5)
+				return false;
+		}
 		return true;
+	}
+	
+	private static void endMove(Pin p) {
+		Barrier.checkForNewBarrier(p);
+		if(p.getPathType() == Path.Common) {
+			if(!isShelter(p.getPathNum()) && !isExit(p.getPathNum())) {
+				for (Player pl :  GameState.getPlayers()) {
+					for(Pin pin: pl.getPins()) {
+						if(pl != GameState.getTurnPlayer()) {
+							if(p.getPathNum()==pin.getPathNum() && p.getPathType() == pin.getPathType()) {
+								pin.sendHome();
+							}
+						}
+					}
+				}
+			}
+		}
+		ViewMaster.refreshBoard();
+	}
+	
+	static boolean isShelter(int n) {
+		return (n==9 || n== 22 || n==35 || n==48);
+	}
+	
+	static boolean isExit(int n) {
+		return (n==13 || n== 26 || n==39 || n==0);
 	}
 }
