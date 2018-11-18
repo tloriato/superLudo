@@ -27,4 +27,7 @@ public class ViewMaster {
 		centralPanel.repaint();
 	}
 	
+	public static void refreshDice() {
+		SideMenu.refreshDice();
+	}
 }

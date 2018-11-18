@@ -114,4 +114,9 @@ public class SideMenu extends Panel {
 		this.add(throwDice);
 		this.add(playingDice);
 	}
+	
+	public static void refreshDice() {
+		playingDice.repaint();
+	}
+	
 }

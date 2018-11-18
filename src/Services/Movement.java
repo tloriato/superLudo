@@ -1,18 +1,18 @@
 package Services;
 
+import java.util.ArrayList;
+
 import Models.Path;
 import Models.Pin;
 import Models.Player;
 import View.ViewMaster;
 
-public class Movement {
+public class Movement { 
 	
 	private static Pin lastSelected = null;
 	
 	public static void select(Pin pin) {
 		int dice =GameState.getDice();
-		if(forcedMove())
-			return;
 		if(dice==0) {
 			System.out.println("Jogue o Dado");
 			return;
@@ -25,23 +25,93 @@ public class Movement {
 		}
 		move(pin);
 		if(dice== 6) {
-			GameState.addCountSix();
-			if(GameState.getCountSix()<3) {
-				lastSelected = pin;
-				GameState.setDice(0);
-				return;
-			}
-			pin.sendHome();
+			GameState.setDice(0);
+			lastSelected = pin;
 		}
 		GameState.nextTurn();
 	}
 	
-	public static boolean forcedMove() {
+	public static void forcedMove() {
 		int dice =GameState.getDice();
 		if(dice==5) {
-			return moveFive();
+			if(moveFive())
+				return;
 		}
-		return false;
+		if(dice== 6) {
+			GameState.addCountSix();
+			if(GameState.getCountSix()>=3) {
+				lastSelected.sendHome();
+				ViewMaster.refreshBoard();
+				GameState.nextTurn();
+				return;
+			}
+			ArrayList<Pin> pins = Barrier.firstBarrier();
+			if(pins.size()==1) {
+				if(checkForMove(pins.get(0))) {
+					move(pins.get(0));
+					GameState.setDice(0);
+					lastSelected = pins.get(0);
+					return;
+				}
+			}
+			if(pins.size()==2) {
+				int i = pinAhead(pins.get(0),pins.get(1));
+				if(checkForMove(pins.get(i))) {
+					move(pins.get(i));
+					GameState.setDice(0);
+					lastSelected = pins.get(i);
+					return;
+				}
+				if(i==0)
+					i=1;
+				else
+					i=0;
+				if(checkForMove(pins.get(i))) {
+					move(pins.get(i));
+					GameState.setDice(0);
+					lastSelected = pins.get(i);
+					return;
+				}
+			}
+		}
+		
+		Pin pin=null;
+		for(Pin p : GameState.getTurnPlayer().getPins()) {
+			if(checkForMove(p)) {
+				if(pin==null)
+					pin=p;
+				else
+					return;
+			}
+				
+		}
+		
+		move(pin);
+		GameState.nextTurn();
+		
+	}
+	private static int pinAhead(Pin p1, Pin p2) {
+		if(p1.getPathType() == Path.LastRoad && p2.getPathType() == Path.Common)
+			return 0;
+		if(p2.getPathType() == Path.LastRoad && p1.getPathType() == Path.Common)
+			return 1;
+		if(p1.getPathType() == Path.LastRoad) {
+			if(p1.getPathNum()>p1.getPathNum()) {
+				return 0;
+			}
+			return 1;
+		}
+		int ent = lastRoadEntrace(GameState.getTurnPlayer().getNumber());
+		
+		if(p1.getPathNum()< ent && p2.getPathNum()>ent)
+			return 0;
+		if(p2.getPathNum()< ent && p1.getPathNum()>ent)
+			return 1;
+		if(p1.getPathNum()>p2.getPathNum())
+			return 0;
+		return 1;
+		
+		
 	}
 	
 	private static void move (Pin p) {
@@ -53,12 +123,15 @@ public class Movement {
 			if(enterLastRoad( playerNum,destiny, p.getPathNum(), p))
 				return;
 			if(destiny>51)
-				destiny= destiny -51;
+				destiny= destiny -52;
 			p.setPathNum(destiny);
 		}
 		
 		if(p.getPathType() == Path.LastRoad) {
-			//if()
+			if(destiny ==5)
+				p.setPath(Path.End);
+			else
+				p.setPathNum(destiny);
 		}
 		
 		endMove(p);
@@ -141,6 +214,8 @@ public class Movement {
 			if(initial + dice >5)
 				return false;
 		}
+		if(Barrier.barrierOnTheWay(p.getPathNum(), dice, GameState.getTurnPlayer(), p.getPathType()))
+			return false;
 		return true;
 	}
 	

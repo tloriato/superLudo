@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import Services.DiceLogic;
 import Services.GameState;
+import Services.Movement;
 
 import java.util.concurrent.TimeUnit;
 
@@ -41,7 +42,17 @@ public class PlayingDice extends Panel {
 	}
 	
 	public void paint(Graphics g) {
-		g.setColor(Color.red);
+		int player = GameState.getTurnPlayer().getNumber();
+		Color color;
+		if(player ==1)
+			color = Color.green;
+		else if (player == 2)
+			color = Color.yellow;
+		else if(player ==3)
+			color = Color.blue;
+		else
+			color = Color.red;
+		g.setColor(color);
 		g.fillRect(0, 0, width, height);
 		g.drawImage(this.image[animatedDice -1], 29, 26, this);
 		if(blink<2) {
@@ -63,6 +74,7 @@ public class PlayingDice extends Panel {
 					System.out.println("Dado ja foi jogado");
 				}
 				stable = true;
+				Movement.forcedMove();
 			}
 		}).start();
 	}
@@ -90,7 +102,7 @@ public class PlayingDice extends Panel {
 		catch (InterruptedException ex) {
 			System.out.println("Erro Blink");
 		}
-		g.setColor(Color.red);
+		g.setColor(Color.black);
 		g.fillRect(0, 0, width, height);
 		try { 
 			Thread.sleep (100);
@@ -105,4 +117,6 @@ public class PlayingDice extends Panel {
 	public static boolean isStable() {
 		return stable;
 	}
+	
+	
 }
