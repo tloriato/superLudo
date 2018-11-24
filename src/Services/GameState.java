@@ -70,6 +70,10 @@ public class GameState {
 		countSix++;
 	}
 	
+	public static void zeroCountSix() {
+		countSix = 0;
+	}
+	
 	// Modelo fullState(quebras de linhas somente para visualiza��o):
 	// TP,RN,LD,CS
 	// N,XY,XY,XY,XY

@@ -15,6 +15,7 @@ import Services.Movement;
 public class DrawPin {
 	
 	private static Pin pins[] = new Pin[16];
+	private static int players[] = new int[16];
 	private static int positions[][] = new int[16][2];
 	private static int shelter[][] = new int[4][2];
 	private static int exit[][] = new int[4][2];
@@ -25,10 +26,20 @@ public class DrawPin {
 		int pos[];
 		for (Player pl : GameState.getPlayers() ) {
 			for(Pin pi : pl.getPins()){
-				pos=DrawPin.drawPin(g2d,pi,squareSize,pl.getNumber());
+				pos=DrawPin.drawPin(g2d,pi,squareSize,pl.getNumber(),1);
 				pins[count] = pi;
 				positions[count]=pos;
+				players[count]=pl.getNumber();
 				count++;
+			}
+		}
+		
+		for(int i=0;i<16;i++) {
+			for(int j=i+1;j<16;j++) {
+				if(positions[i][0]==positions[j][0] && positions[i][1]==positions[j][1] && players[i]!=players[j]) {
+					DrawPin.drawPin(g2d,pins[i],squareSize,players[i],1);
+					DrawPin.drawPin(g2d,pins[j],squareSize,players[j],2.0/3);
+				}
 			}
 		}
 		
@@ -64,7 +75,7 @@ public class DrawPin {
 		
 		
 	}
-	private static int[] drawPin(Graphics2D g2d, Pin p,int squareSize,int playerNumber) {
+	private static int[] drawPin(Graphics2D g2d, Pin p,int squareSize,int playerNumber, double factor) {
 			
 		Color color = getColor(playerNumber);
 		Path path = p.getPathType();
@@ -73,7 +84,7 @@ public class DrawPin {
 		
 		double centerX = (pos[0]+0.5)*squareSize;
 		double centerY = (pos[1]+0.5)*squareSize;
-		double pinRadius = squareSize*0.45;
+		double pinRadius = squareSize*0.45*factor;
 	
 
 		Ellipse2D circ= new Ellipse2D.Double();
@@ -94,6 +105,8 @@ public class DrawPin {
 			if(posX==positions[i][0] && posY==positions[i][1] ) {
 				System.out.println(pins[i]);
 				Movement.select(pins[i]);
+				if(players[i]==GameState.getTurnPlayer().getNumber())
+					break;
 			}
 		}
 		

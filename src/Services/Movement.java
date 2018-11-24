@@ -23,10 +23,19 @@ public class Movement {
 		if(!GameState.getTurnPlayer().isPinOwner(pin)) {
 			return;
 		}
-		move(pin);
+		if(move(pin)) {
+			GameState.setDice(0);
+			if(dice== 6) 
+				lastSelected = pin;
+			else 
+				GameState.zeroCountSix();
+			return;
+				
+		}
 		if(dice== 6) {
 			GameState.setDice(0);
 			lastSelected = pin;
+			return;
 		}
 		GameState.nextTurn();
 	}
@@ -86,7 +95,24 @@ public class Movement {
 				
 		}
 		
-		move(pin);
+		if(pin==null) {
+			GameState.nextTurn();
+		}
+		
+		if(move(pin)) {
+			GameState.setDice(0);
+			if(dice== 6) 
+				lastSelected = pin;
+			else 
+				GameState.zeroCountSix();
+			return;
+			
+		}
+		if(dice== 6) {
+			GameState.setDice(0);
+			lastSelected = pin;
+			return;
+		}
 		GameState.nextTurn();
 		
 	}
@@ -114,27 +140,29 @@ public class Movement {
 		
 	}
 	
-	private static void move (Pin p) {
+	private static boolean move (Pin p) {
 		int destiny = p.getPathNum() + GameState.getDice();
 		int playerNum = GameState.getTurnPlayer().getNumber();
 		Barrier.leaveBarrier(p);
 		
 		if(p.getPathType() == Path.Common) {
 			if(enterLastRoad( playerNum,destiny, p.getPathNum(), p))
-				return;
+				return false;
 			if(destiny>51)
 				destiny= destiny -52;
 			p.setPathNum(destiny);
 		}
 		
 		if(p.getPathType() == Path.LastRoad) {
-			if(destiny ==5)
+			if(destiny ==5) {
 				p.setPath(Path.End);
+				return true;
+			}
 			else
 				p.setPathNum(destiny);
 		}
 		
-		endMove(p);
+		return endMove(p);
 		/*if(checkForMove(posX, posY)) {
 			selected.setPosition(posX, posY);
 			ViewMaster.refreshBoard();
@@ -145,13 +173,13 @@ public class Movement {
 	
 	private static boolean enterLastRoad(int playerNum, int destiny, int originalPos, Pin p) {
 		int enterHouse = lastRoadEntrace(playerNum);
-		if(destiny > enterHouse && originalPos < enterHouse ){
+		if(destiny > enterHouse && originalPos <= enterHouse ){
 			int diff = destiny - enterHouse;
 			if(diff==6)
 				p.setPath(Path.End);
 			else {
 				p.setPath(Path.LastRoad);
-				p.setPathNum(destiny - enterHouse);
+				p.setPathNum(destiny - enterHouse-1);
 			}
 			endMove(p);
 			return true;
@@ -171,55 +199,104 @@ public class Movement {
 	}
 	
 	static void firstMove (Player player) {
-		outOfBegin (player, player.getBeginPin());
+		Pin p = player.getBeginPin();
+		int exit = outOfBegin (player);
+		p.setPath(Path.Common);
+		p.setPathNum(exit);
+		ViewMaster.refreshBoard();
 	}
 	
 	static boolean moveFive() {
 		Pin p = GameState.getTurnPlayer().getBeginPin();
+		int exit = outOfBegin (GameState.getTurnPlayer());
 		if (p==null)
 			return false;
-		outOfBegin (GameState.getTurnPlayer(), p);
+		Pin pinInExit =null;
+		for (Player pl :  GameState.getPlayers()) {
+			for(Pin pin: pl.getPins()) {
+				if(exit==pin.getPathNum() && Path.Common == pin.getPathType() ) {
+					if(pl == GameState.getTurnPlayer()) 
+						return false;
+					pinInExit = pin;
+					break;
+				}
+			}
+		}
+		if(pinInExit != null) {			
+			pinInExit.sendHome();
+			p.setPath(Path.Common);
+			p.setPathNum(exit);
+			ViewMaster.refreshBoard();
+			GameState.setDice(0);
+			forcedMove();
+			return true;	
+		}
+
+		p.setPath(Path.Common);
+		p.setPathNum(exit);
+		ViewMaster.refreshBoard();
 		GameState.nextTurn();
 		return true;		
 	}
 	
-	private static void outOfBegin (Player player, Pin selected) {
+	private static int outOfBegin (Player player) {
 		int number = player.getNumber();
-		if(number ==1) {
-			selected.setPath(Path.Common);
-			selected.setPathNum(0);
-		}
-		else if(number ==2) {
-			selected.setPath(Path.Common);
-			selected.setPathNum(13);
-		}
-		else if(number ==3) {
-			selected.setPath(Path.Common);
-			selected.setPathNum(26);
-		}
-		else {
-			selected.setPath(Path.Common);
-			selected.setPathNum(39);
-		}
-		ViewMaster.refreshBoard();
+		if(number ==1) 
+			return 0;
+		else if(number ==2) 
+			return 13;
+		else if(number ==3) 
+			return 26;
+		else 
+			return 39;
 	}
 
 	
 	private static boolean checkForMove(Pin p) {
 		int dice = GameState.getDice();
 		int initial = p.getPathNum();
+		int destiny = initial+dice;
 		if(p.isBeginZone() || p.isEndZone())
 			return false;
 		if(p.getPathType() == Path.LastRoad) {
-			if(initial + dice >5)
+			if(destiny >5)
 				return false;
 		}
 		if(Barrier.barrierOnTheWay(p.getPathNum(), dice, GameState.getTurnPlayer(), p.getPathType()))
 			return false;
+		int count=0;
+		if(isExit(destiny) && p.getPathType() == Path.Common) {
+			for (Player pl :  GameState.getPlayers()) {
+				for(Pin pin: pl.getPins()) {
+					if(destiny==pin.getPathNum() && Path.Common == pin.getPathType()) {
+						if(outOfBegin(pl)!=destiny)
+							return false;
+						count++;
+					}
+				}
+			}
+		}
+		if(count==2)
+			return false;
+		count=0;
+		if(isShelter(destiny) && p.getPathType() == Path.Common) {
+			for (Player pl :  GameState.getPlayers()) {
+				for(Pin pin: pl.getPins()) {
+					if(destiny==pin.getPathNum() && Path.Common == pin.getPathType()) {
+						if(pl.getNumber()==GameState.getTurnPlayer().getNumber())
+							return false;
+						count++;
+					}
+				}
+			}
+		}
+		if(count==2)
+			return false;
+		
 		return true;
 	}
 	
-	private static void endMove(Pin p) {
+	private static boolean endMove(Pin p) {
 		Barrier.checkForNewBarrier(p);
 		if(p.getPathType() == Path.Common) {
 			if(!isShelter(p.getPathNum()) && !isExit(p.getPathNum())) {
@@ -228,6 +305,8 @@ public class Movement {
 						if(pl != GameState.getTurnPlayer()) {
 							if(p.getPathNum()==pin.getPathNum() && p.getPathType() == pin.getPathType()) {
 								pin.sendHome();
+								ViewMaster.refreshBoard();
+								return true;
 							}
 						}
 					}
@@ -235,6 +314,7 @@ public class Movement {
 			}
 		}
 		ViewMaster.refreshBoard();
+		return false;
 	}
 	
 	static boolean isShelter(int n) {

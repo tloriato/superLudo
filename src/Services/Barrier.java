@@ -40,7 +40,7 @@ public class Barrier {
 		ArrayList<Barrier> b =Barrier.getBarriers();
 		for(int j=0;j<b.size();j++)  {
 			if(p.getPathNum() == b.get(j).getPos() && p.getPathType()==b.get(j).getPath()) {
-				barriers.remove(barriers.indexOf(b));
+				barriers.remove(barriers.indexOf(b.get(j)));
 				return;
 			}
 				
@@ -51,7 +51,7 @@ public class Barrier {
 	public static boolean barrierOnTheWay(int pos, int dice, Player player, Path path) {
 		
 		ArrayList<Barrier> b =Barrier.getBarriers();
-		for(int i=1;i<dice;i++) {
+		for(int i=1;i<=dice;i++) {
 			for( int j=0;j<b.size();j++) {
 				if(pos == b.get(j).getPos() && path==b.get(j).getPath() && player!=b.get(j).getPlayer())
 					return true;
@@ -68,7 +68,7 @@ public class Barrier {
 		
 		
 		for( int j=0;j<b.size();j++) {
-			if(pos == b.get(j).getPos() && path==b.get(j).getPath() && player!=b.get(j).getPlayer())
+			if(pos == b.get(j).getPos() && path==b.get(j).getPath() )
 				return true;
 		}
 		
