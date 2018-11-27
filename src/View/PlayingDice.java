@@ -22,7 +22,7 @@ public class PlayingDice extends Panel {
 	private BufferedImage[] image = new BufferedImage[6];
 	private static PlayingDice playingDice = null;
 	
-	private static boolean stable;
+	private static boolean stable = true;
 	
 	public PlayingDice(int width, int height) {
 		this.width = width;
@@ -71,6 +71,8 @@ public class PlayingDice extends Panel {
 	}
 	
 	public void throwDice() {
+		if(!stable)
+			return;
 		stable = false;
 		new Thread(new Runnable() {
 			public void run() {
@@ -83,8 +85,8 @@ public class PlayingDice extends Panel {
 				else {
 					System.out.println("Dado ja foi jogado");
 				}
-				stable = true;
 				ServiceFacade.forcedMove();
+				stable = true;
 			}
 		}).start();
 	}
@@ -124,7 +126,7 @@ public class PlayingDice extends Panel {
 		repaint();
 	}
 	
-	public static boolean isStable() {
+	static boolean isStable() {
 		return stable;
 	}
 	

@@ -101,7 +101,7 @@ public abstract class DrawPin {
 		
 	}
 	
-	public static void findPin(int posX, int posY) {
+	static void findPin(int posX, int posY) {
 		for(int i=0;i<16;i++) {
 			if(posX==positions[i][0] && posY==positions[i][1] ) {
 				System.out.println(pins[i]);

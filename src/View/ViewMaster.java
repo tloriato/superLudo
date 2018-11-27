@@ -30,4 +30,12 @@ public abstract class ViewMaster {
 	public static void refreshDice() {
 		SideMenu.refreshDice();
 	}
+	
+	public static void findPin(int posX,int  posY) {
+		DrawPin.findPin(posX, posY);
+	}
+	
+	public static boolean isStable() {
+		return PlayingDice.isStable();
+	}
 }
