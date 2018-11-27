@@ -22,14 +22,6 @@ public class Player {
 		//this.pins[3] = new Pin(Integer.parseInt(p4x), Integer.parseInt(p4y));
 	}
 	
-	public Pin checkForPin(int posX, int posY) {
-		/*for (Pin p : pins) {
-			if(p.getPosX()==posX && p.getPosY()==posY)
-				return p;
-		}
-		return null;*/
-		return null;
-	}
 	
 	public boolean isPinOwner(Pin p) {
 		for (Pin pi : pins) {

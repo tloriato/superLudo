@@ -9,11 +9,19 @@ public class Tabuleiro {
 	//private static final long serialVersionUID = 1L;
 	private int boardSize;
 	private int squareSize;
+	private static Tabuleiro tabuleiro = null;
 	//private int squareNumbers=15;
 	
-	public Tabuleiro(int size) {
+	private Tabuleiro(int size) {
 		this.boardSize = size;
 		this.squareSize=this.boardSize/15;
+	}
+	
+	public static Tabuleiro createTabuleiro(int size) {
+		if(tabuleiro != null)
+			return null;
+		tabuleiro = new Tabuleiro(size);
+		return tabuleiro;
 	}
 	
 	public int getSquareSize() {

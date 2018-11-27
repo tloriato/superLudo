@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import Services.DiceLogic;
 import Services.GameState;
 import Services.Movement;
+import Services.ServiceFacade;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +20,7 @@ public class PlayingDice extends Panel {
 	private static int animatedDice;
 	private static int blink;
 	private BufferedImage[] image = new BufferedImage[6];
+	private static PlayingDice playingDice = null;
 	
 	private static boolean stable;
 	
@@ -41,8 +43,16 @@ public class PlayingDice extends Panel {
 		
 	}
 	
+	public static PlayingDice createPlayingDice(int width, int height) {
+		if(playingDice != null)
+			return null;
+		playingDice = new PlayingDice( width, height);
+		return playingDice;
+	}
+
+	
 	public void paint(Graphics g) {
-		int player = GameState.getTurnPlayer().getNumber();
+		int player = ServiceFacade.getTurnPlayer().getNumber();
 		Color color;
 		if(player ==1)
 			color = Color.green;
@@ -64,9 +74,9 @@ public class PlayingDice extends Panel {
 		stable = false;
 		new Thread(new Runnable() {
 			public void run() {
-				if(DiceLogic.runDice()) {
+				if(ServiceFacade.runDice()) {
 					animate();
-					PlayingDice.animatedDice = GameState.getDice();
+					PlayingDice.animatedDice = ServiceFacade.getDice();
 					blink=0;
 					repaint();
 				}
@@ -74,7 +84,7 @@ public class PlayingDice extends Panel {
 					System.out.println("Dado ja foi jogado");
 				}
 				stable = true;
-				Movement.forcedMove();
+				ServiceFacade.forcedMove();
 			}
 		}).start();
 	}

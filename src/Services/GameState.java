@@ -9,14 +9,14 @@ import Models.Pin;
 import Models.Player;
 import View.ViewMaster;
 
-public class GameState {
+public abstract class GameState {
 	private static Player[] players= new Player[4];
 	private static int turnPlayer;
 	private static int round;
 	private static int lastDice;
 	private static int countSix;
 	
-	public static void initializeGame() {
+	static void initializeGame() {
 		players[0] = new Player(1,2,2);
 		players[1] = new Player(2,11,2);
 		players[2] = new Player(3,11,11);
@@ -27,25 +27,25 @@ public class GameState {
 		countSix = 0;
 	}
 	
-	public static Player getTurnPlayer() {
+	static Player getTurnPlayer() {
 		System.out.println(turnPlayer);
 		return players[turnPlayer];
 	}
 	
-	public static Player[] getPlayers() {
+	static Player[] getPlayers() {
 		return players;
 	}
 	
-	public static void setDice(int num) {
+	static void setDice(int num) {
 		lastDice = num;
 		System.out.println(lastDice);
 	}
 	
-	public static int getDice() {
+	static int getDice() {
 		return lastDice;
 	}
 	
-	public static void nextTurn() {
+	static void nextTurn() {
 		if(turnPlayer==3) {
 			turnPlayer=0;
 			round++;
@@ -58,19 +58,19 @@ public class GameState {
 		countSix =0;
 	}
 	
-	public static void firstTurn() {
+	static void firstTurn() {
 		Movement.firstMove (players[turnPlayer]);
 	}
 	
-	public static int getCountSix() {
+	static int getCountSix() {
 		return countSix;
 	}
 	
-	public static void addCountSix() {
+	static void addCountSix() {
 		countSix++;
 	}
 	
-	public static void zeroCountSix() {
+	static void zeroCountSix() {
 		countSix = 0;
 	}
 	
@@ -84,7 +84,7 @@ public class GameState {
 	// N � o numero de cada player, e XY as coordenadas de cada pe�o dos jogadores
 	
 	// retorna uma String no modelo fullState
-	public static String getFullState() {
+	static String getFullState() {
 		List<String> state = new ArrayList<>();
 		state.add(Integer.toString(turnPlayer));
 		state.add(Integer.toString(round));
@@ -100,7 +100,7 @@ public class GameState {
 		return String.join(",", state);
 	}
 
-	public static void loadState(String fullLoadedState) {
+	static void loadState(String fullLoadedState) {
 		String[] st = fullLoadedState.split(",");
 		Player playerOne = new Player(st[4], st[5], st[6], st[7], st[8], st[9], st[10], st[11], st[12]);
 		Player playerTwo = new Player(st[13], st[14], st[15], st[16], st[17], st[18], st[19], st[20], st[21]);

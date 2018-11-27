@@ -7,11 +7,11 @@ import Models.Pin;
 import Models.Player;
 import View.ViewMaster;
 
-public class Movement { 
+public abstract class Movement { 
 	
 	private static Pin lastSelected = null;
 	
-	public static void select(Pin pin) {
+	static void select(Pin pin) {
 		int dice =GameState.getDice();
 		if(dice==0) {
 			System.out.println("Jogue o Dado");
@@ -40,7 +40,7 @@ public class Movement {
 		GameState.nextTurn();
 	}
 	
-	public static void forcedMove() {
+	static void forcedMove() {
 		int dice =GameState.getDice();
 		if(dice==5) {
 			if(moveFive())
@@ -187,7 +187,7 @@ public class Movement {
 		return false;
 	}
 	
-	public static int lastRoadEntrace(int playerNum) {
+	static int lastRoadEntrace(int playerNum) {
 		if(playerNum == 1) 
 			return 50;
 		if(playerNum == 2) 

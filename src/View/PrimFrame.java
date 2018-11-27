@@ -6,10 +6,10 @@ public class PrimFrame extends JFrame {
 	/**
 	 * Hello World of GUI 
 	 */
-	
+	private static PrimFrame primFrame = null;
 	private static final long serialVersionUID = 1L;
 	
-	public PrimFrame(int LARG_DEFAULT, int ALT_DEFAULT) {
+	private PrimFrame(int LARG_DEFAULT, int ALT_DEFAULT) {
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screenSize = tk.getScreenSize();
 		
@@ -21,6 +21,13 @@ public class PrimFrame extends JFrame {
 		this.setBounds(x,y,LARG_DEFAULT,ALT_DEFAULT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	public static PrimFrame createPrimFrame(int LARG_DEFAULT, int ALT_DEFAULT) {
+		if(primFrame != null)
+			return null;
+		primFrame = new PrimFrame(LARG_DEFAULT, ALT_DEFAULT);
+		return primFrame;
 	}
 
 }

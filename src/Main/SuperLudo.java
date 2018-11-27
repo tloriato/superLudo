@@ -1,14 +1,15 @@
 package Main;
 
 import Services.GameState;
+import Services.ServiceFacade;
 import View.ViewMaster;
 
 public class SuperLudo {
 	
 	public static void main(String[] args) {
-		GameState.initializeGame();
+		ServiceFacade.initializeGame();
 		ViewMaster.InitializeView();
-		GameState.firstTurn();
+		ServiceFacade.firstTurn();
 	}
 
 }

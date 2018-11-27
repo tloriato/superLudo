@@ -11,8 +11,9 @@ import Models.Player;
 import Services.Barrier;
 import Services.GameState;
 import Services.Movement;
+import Services.ServiceFacade;
 
-public class DrawPin {
+public abstract class DrawPin {
 	
 	private static Pin pins[] = new Pin[16];
 	private static int players[] = new int[16];
@@ -24,7 +25,7 @@ public class DrawPin {
 		
 		int count=0; 
 		int pos[];
-		for (Player pl : GameState.getPlayers() ) {
+		for (Player pl : ServiceFacade.getPlayers() ) {
 			for(Pin pi : pl.getPins()){
 				pos=DrawPin.drawPin(g2d,pi,squareSize,pl.getNumber(),1);
 				pins[count] = pi;
@@ -104,8 +105,8 @@ public class DrawPin {
 		for(int i=0;i<16;i++) {
 			if(posX==positions[i][0] && posY==positions[i][1] ) {
 				System.out.println(pins[i]);
-				Movement.select(pins[i]);
-				if(players[i]==GameState.getTurnPlayer().getNumber())
+				ServiceFacade.select(pins[i]);
+				if(players[i]==ServiceFacade.getTurnPlayer().getNumber())
 					break;
 			}
 		}

@@ -13,11 +13,20 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import Services.GameState;
+import Services.ServiceFacade;
 
 public class SideMenu extends Panel {
 	
 	private static final long serialVersionUID = -3469803300168088129L;
 	private static PlayingDice playingDice = null;
+	private static SideMenu sideMenu = null;
+	
+	public static SideMenu createSideMenu(int LARG_DEFAULT, int ALT_DEFAULT) {
+		if(sideMenu != null)
+			return null;
+		sideMenu = new SideMenu(LARG_DEFAULT, ALT_DEFAULT);
+		return sideMenu;
+	}
 	
 	private ActionListener saveDialog = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -35,7 +44,7 @@ public class SideMenu extends Panel {
 				}
 				try {
 					BufferedWriter writer = new BufferedWriter(new FileWriter(saveFilePath));
-					writer.write(GameState.getFullState());														
+					writer.write(ServiceFacade.getFullState());														
 					writer.close();
 					JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso!", "Arquivo salvo", JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException err) {
@@ -61,7 +70,7 @@ public class SideMenu extends Panel {
 					try {
 						BufferedReader reader = new BufferedReader(new FileReader(loadFilePath));
 						String fullLoadedState = reader.readLine();
-						GameState.loadState(fullLoadedState);
+						ServiceFacade.loadState(fullLoadedState);
 					} catch (IOException err) {
 						err.printStackTrace();
 					}
@@ -70,7 +79,7 @@ public class SideMenu extends Panel {
 		}
 	};
 	
-	public SideMenu(int LARG_DEFAULT, int ALT_DEFAULT) {
+	private SideMenu(int LARG_DEFAULT, int ALT_DEFAULT) {
 		/* Menu Lateral */
 		int xMenu = (int)(ALT_DEFAULT);
 		int widthMenu = LARG_DEFAULT - xMenu;
@@ -95,7 +104,7 @@ public class SideMenu extends Panel {
 		currentlyPlaying.setAlignment(Label.CENTER);
 		currentlyPlaying.setFont(new Font("Serif", Font.BOLD, 21));
 		
-		PlayingDice playingDice = new PlayingDice((int) (widthMenu * 0.75), (int) (widthMenu * 0.75));
+		PlayingDice playingDice = PlayingDice.createPlayingDice((int) (widthMenu * 0.75), (int) (widthMenu * 0.75));
 		playingDice.setBounds((int) (widthMenu * 0.175), (int) (ALT_DEFAULT * 0.125) + 150 + 45 * 3, (int) (widthMenu * 0.65), (int) (widthMenu * 0.65));
 		
 		JButton throwDice = new JButton("Lan�ar Dado");

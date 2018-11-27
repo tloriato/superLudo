@@ -8,7 +8,19 @@ import View.PlayingDice;
 
 
 public class Controler implements  MouseListener {
-
+	private static Controler controler = null;
+	
+	private Controler() {
+		
+	}
+	
+	public static Controler createControler() {
+		if(controler!=null)
+			return null;
+		controler = new Controler();
+		return controler;
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
