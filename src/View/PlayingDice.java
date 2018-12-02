@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 
 import Services.DiceLogic;
 import Services.GameState;
@@ -50,27 +51,17 @@ public class PlayingDice extends Panel {
 		return playingDice;
 	}
 
-	
 	public void paint(Graphics g) {
-		int player = ServiceFacade.getTurnPlayer().getNumber();
-		Color color;
-		if(player ==1)
-			color = Color.green;
-		else if (player == 2)
-			color = Color.yellow;
-		else if(player ==3)
-			color = Color.blue;
-		else
-			color = Color.red;
+		Color color = getPlayerColor();
 		g.setColor(color);
 		g.fillRect(0, 0, width, height);
 		g.drawImage(this.image[animatedDice -1], 29, 26, this);
-		if(blink<2) {
+		if (blink < 2) {
 			blink(g);
 		}
 	}
 	
-	public void throwDice() {
+	public void throwDice(JButton throwDice) {
 		if(!stable)
 			return;
 		stable = false;
@@ -87,6 +78,7 @@ public class PlayingDice extends Panel {
 				}
 				ServiceFacade.forcedMove();
 				stable = true;
+				throwDice.setEnabled(true);
 			}
 		}).start();
 	}
@@ -109,14 +101,9 @@ public class PlayingDice extends Panel {
 	
 	public void blink(Graphics g) {
 		try { 
-			Thread.sleep (100);
-		} 
-		catch (InterruptedException ex) {
-			System.out.println("Erro Blink");
-		}
-		g.setColor(Color.black);
-		g.fillRect(0, 0, width, height);
-		try { 
+			Thread.sleep (300);
+			g.setColor(getPlayerColor());
+			g.fillRect(0, 0, width, height);
 			Thread.sleep (100);
 		} 
 		catch (InterruptedException ex) {
@@ -130,5 +117,17 @@ public class PlayingDice extends Panel {
 		return stable;
 	}
 	
-	
+	private Color getPlayerColor() {
+		int player = ServiceFacade.getTurnPlayer().getNumber();
+		Color color;
+		if(player ==1)
+			color = Color.green;
+		else if (player == 2)
+			color = Color.yellow;
+		else if(player ==3)
+			color = Color.blue;
+		else
+			color = Color.red;
+		return color;
+	}
 }

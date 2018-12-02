@@ -3,8 +3,9 @@ package Services;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
+import Controler.Observer;
+import Controler.Subject;
 import Models.Pin;
 import Models.Player;
 import View.ViewMaster;
@@ -15,6 +16,7 @@ public abstract class GameState {
 	private static int round;
 	private static int lastDice;
 	private static int countSix;
+	
 	
 	static void initializeGame() {
 		players[0] = new Player(1,2,2);
@@ -131,4 +133,15 @@ public abstract class GameState {
 		ViewMaster.refreshBoard();
 	}
 	
+	static void resetGame() {
+		GameState.players[0] = new Player(1,2,2);
+		GameState.players[1] = new Player(2,11,2);
+		GameState.players[2] = new Player(3,11,11);
+		GameState.players[3] = new Player(4,2,11);
+		GameState.turnPlayer = 0;
+		GameState.lastDice = 0;
+		GameState.round = 0;
+		GameState.countSix = 0;	
+		Movement.firstMove (players[turnPlayer]);
+	}
 }

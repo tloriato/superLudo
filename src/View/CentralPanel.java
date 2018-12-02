@@ -1,13 +1,6 @@
 package View;
 import javax.swing.JPanel;
-
-import Models.Pin;
-import Models.Player;
-import Services.GameState;
-
 import java.awt.*;
-import java.awt.geom.*;
-import java.util.ArrayList;
 
 public class CentralPanel extends JPanel {
 	/**

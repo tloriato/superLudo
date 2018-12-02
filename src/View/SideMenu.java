@@ -20,6 +20,8 @@ public class SideMenu extends Panel {
 	private static final long serialVersionUID = -3469803300168088129L;
 	private static PlayingDice playingDice = null;
 	private static SideMenu sideMenu = null;
+	private static JButton throwDice = null;
+	private static JButton newGame = null;
 	
 	public static SideMenu createSideMenu(int LARG_DEFAULT, int ALT_DEFAULT) {
 		if(sideMenu != null)
@@ -65,7 +67,7 @@ public class SideMenu extends Panel {
 			if (file == JFileChooser.APPROVE_OPTION) {
 				String loadFilePath = fileChooser.getSelectedFile().toString();
 				if (!loadFilePath.substring(loadFilePath.length() - 4).equals(".ssf")) {
-					JOptionPane.showMessageDialog(null, "Arquivo n�o compat�vel", "Extens�o errada!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Arquivo nao compativel", "Extencao errada!", JOptionPane.ERROR_MESSAGE);
 				} else {
 					try {
 						BufferedReader reader = new BufferedReader(new FileReader(loadFilePath));
@@ -79,6 +81,19 @@ public class SideMenu extends Panel {
 		}
 	};
 	
+	private ActionListener playDice = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			SideMenu.throwDice.setEnabled(false);
+	    	SideMenu.playingDice.throwDice(SideMenu.throwDice);
+	    }
+	};
+	
+	private ActionListener resetGame = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			ServiceFacade.resetGame();
+		}
+	};
+	
 	private SideMenu(int LARG_DEFAULT, int ALT_DEFAULT) {
 		/* Menu Lateral */
 		int xMenu = (int)(ALT_DEFAULT);
@@ -88,8 +103,9 @@ public class SideMenu extends Panel {
 		this.setBackground(Color.gray);
 		this.setBounds(xMenu, 0, widthMenu, ALT_DEFAULT);
 		
-		JButton newGame = new JButton("Novo Jogo");
-		newGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125), (int) (widthMenu * 0.75), 45);
+		SideMenu.newGame = new JButton("Novo Jogo");
+		SideMenu.newGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125), (int) (widthMenu * 0.75), 45);
+		SideMenu.newGame.addActionListener(resetGame);
 		
 		JButton loadGame = new JButton("Carregar Jogo");
 		loadGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 25 + 45 * 1, (int) (widthMenu * 0.75), 45);
@@ -99,21 +115,17 @@ public class SideMenu extends Panel {
 		saveGame.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 50 + 45 * 2, (int) (widthMenu * 0.75), 45);
 		saveGame.addActionListener(saveDialog);
 		
-		Label currentlyPlaying = new Label("� Jogar:");
+		Label currentlyPlaying = new Label("A Jogar:");
 		currentlyPlaying.setBounds((int) (widthMenu * 0.125), (int) (ALT_DEFAULT * 0.125) + 100 + 45 * 3, (int) (widthMenu * 0.75), 45);
 		currentlyPlaying.setAlignment(Label.CENTER);
 		currentlyPlaying.setFont(new Font("Serif", Font.BOLD, 21));
 		
-		PlayingDice playingDice = PlayingDice.createPlayingDice((int) (widthMenu * 0.75), (int) (widthMenu * 0.75));
+		SideMenu.playingDice = PlayingDice.createPlayingDice((int) (widthMenu * 0.75), (int) (widthMenu * 0.75));
 		playingDice.setBounds((int) (widthMenu * 0.175), (int) (ALT_DEFAULT * 0.125) + 150 + 45 * 3, (int) (widthMenu * 0.65), (int) (widthMenu * 0.65));
 		
-		JButton throwDice = new JButton("Lan�ar Dado");
-		throwDice.setBounds((int) (widthMenu * 0.125), ((int) (ALT_DEFAULT * 0.125) + 200 + 45 * 3) + (int) (widthMenu * 0.65), (int) (widthMenu * 0.75), 45);
-		throwDice.addActionListener(new ActionListener() {
-	      public void actionPerformed(ActionEvent e) {
-	    	  playingDice.throwDice();
-	      }
-	    });
+		SideMenu.throwDice = new JButton("Lancar Dado");
+		SideMenu.throwDice.setBounds((int) (widthMenu * 0.125), ((int) (ALT_DEFAULT * 0.125) + 200 + 45 * 3) + (int) (widthMenu * 0.65), (int) (widthMenu * 0.75), 45);
+		SideMenu.throwDice.addActionListener(playDice);
 		
 		
 		this.add(newGame);

@@ -1,6 +1,7 @@
 package View;
 
 import Controler.Controler;
+import Controler.Observer;
 
 public abstract class ViewMaster {
 	private final static int LARG_DEFAULT = 960;

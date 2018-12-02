@@ -12,6 +12,10 @@ public abstract class ServiceFacade {
 		GameState.initializeGame();
 	}
 	
+	public static void resetGame() {
+		GameState.resetGame();
+	}
+	
 	public static Player getTurnPlayer() {
 		return GameState.getTurnPlayer();
 	}
