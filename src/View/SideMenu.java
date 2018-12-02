@@ -20,8 +20,9 @@ public class SideMenu extends Panel {
 	private static final long serialVersionUID = -3469803300168088129L;
 	private static PlayingDice playingDice = null;
 	private static SideMenu sideMenu = null;
-	private static JButton throwDice = null;
+	public static JButton throwDice = null;
 	private static JButton newGame = null;
+	public static JComboBox diceNumbers = null;
 	
 	public static SideMenu createSideMenu(int LARG_DEFAULT, int ALT_DEFAULT) {
 		if(sideMenu != null)
@@ -84,7 +85,12 @@ public class SideMenu extends Panel {
 	private ActionListener playDice = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			SideMenu.throwDice.setEnabled(false);
-	    	SideMenu.playingDice.throwDice(SideMenu.throwDice);
+			SideMenu.diceNumbers.setEnabled(false);
+			if (SideMenu.diceNumbers.getSelectedIndex() == 0) {
+				SideMenu.playingDice.throwDice();
+			} else {
+				SideMenu.playingDice.gameDice(SideMenu.diceNumbers.getSelectedIndex());
+			}
 	    }
 	};
 	
@@ -127,6 +133,10 @@ public class SideMenu extends Panel {
 		SideMenu.throwDice.setBounds((int) (widthMenu * 0.125), ((int) (ALT_DEFAULT * 0.125) + 200 + 45 * 3) + (int) (widthMenu * 0.65), (int) (widthMenu * 0.75), 45);
 		SideMenu.throwDice.addActionListener(playDice);
 		
+		String[] numbers = {"Dado Aleatorio", "Dado #1", "Dado #2", "Dado #3", "Dado #4", "Dado #5", "Dado #6"};
+		SideMenu.diceNumbers = new JComboBox(numbers);
+		SideMenu.diceNumbers.setSelectedIndex(0);
+		SideMenu.diceNumbers.setBounds((int) (widthMenu * 0.125), ((int) (ALT_DEFAULT * 0.125) + 200 + 45 * 4) + (int) (widthMenu * 0.65), (int) (widthMenu * 0.75), 45);
 		
 		this.add(newGame);
 		this.add(loadGame);
@@ -134,6 +144,7 @@ public class SideMenu extends Panel {
 		this.add(currentlyPlaying);
 		this.add(throwDice);
 		this.add(playingDice);
+		this.add(diceNumbers);
 	}
 	
 	public static void refreshDice() {

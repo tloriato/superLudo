@@ -61,7 +61,7 @@ public class PlayingDice extends Panel {
 		}
 	}
 	
-	public void throwDice(JButton throwDice) {
+	public void throwDice() {
 		if(!stable)
 			return;
 		stable = false;
@@ -78,7 +78,8 @@ public class PlayingDice extends Panel {
 				}
 				ServiceFacade.forcedMove();
 				stable = true;
-				throwDice.setEnabled(true);
+				SideMenu.throwDice.setEnabled(true);
+				SideMenu.diceNumbers.setEnabled(true);
 			}
 		}).start();
 	}
@@ -129,5 +130,12 @@ public class PlayingDice extends Panel {
 		else
 			color = Color.red;
 		return color;
+	}
+
+	public void gameDice(int diceNumber) {
+		ServiceFacade.gameDice(diceNumber);
+		ServiceFacade.forcedMove();
+		SideMenu.throwDice.setEnabled(true);
+		SideMenu.diceNumbers.setEnabled(true);
 	}
 }

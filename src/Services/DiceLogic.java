@@ -10,4 +10,7 @@ public abstract class DiceLogic {
 		return false;
 	}
 	
+	static void gameDice(int num) {
+		GameState.setDice(num);	
+	}
 }

@@ -4,6 +4,10 @@ import Models.Pin;
 import Models.Player;
 
 public abstract class ServiceFacade {
+	
+	public static void gameDice(int num) {
+		DiceLogic.gameDice(num);
+	}
 	public static boolean runDice() {
 		return DiceLogic.runDice();
 	}

@@ -3,9 +3,6 @@ package Services;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-
-import Controler.Observer;
-import Controler.Subject;
 import Models.Pin;
 import Models.Player;
 import View.ViewMaster;
