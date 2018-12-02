@@ -10,7 +10,13 @@ public class Pin {
 	public Pin(int pinNum) {
 		this.path = Path.Begin;
 		this.pathNum = pinNum;
-		this.initialPos = this.pathNum ; 
+		this.initialPos = this.pathNum; 
+	}
+	
+	public Pin(String path, int pinNum, int initialPos) {
+		this.path = Path.valueOf(path);
+		this.pathNum = pinNum;
+		this.initialPos = initialPos;	
 	}
 	
 	public Path getPathType() {
@@ -46,5 +52,9 @@ public class Pin {
 			return;
 		this.path=Path.Begin;
 		this.pathNum=this.initialPos;
+	}
+	
+	public int getInitialPos() {
+		return this.initialPos;
 	}
 }

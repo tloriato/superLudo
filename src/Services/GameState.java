@@ -74,16 +74,6 @@ public abstract class GameState {
 		countSix = 0;
 	}
 	
-	// Modelo fullState(quebras de linhas somente para visualiza��o):
-	// TP,RN,LD,CS
-	// N,XY,XY,XY,XY
-	// N,XY,XY,XY,XY
-	// N,XY,XY,XY,XY
-	// N,XY,XY,XY,XY
-	// A primeira linha cuida das vari�veis globais de estado do jogo como descritos na classe
-	// N � o numero de cada player, e XY as coordenadas de cada pe�o dos jogadores
-	
-	// retorna uma String no modelo fullState
 	static String getFullState() {
 		List<String> state = new ArrayList<>();
 		state.add(Integer.toString(turnPlayer));
@@ -93,8 +83,9 @@ public abstract class GameState {
 		for (Player player: players) {
 			state.add(Integer.toString(player.getNumber()));
 			for (Pin pin: player.getPins()) {
-				//state.add(Integer.toString(pin.getPosX()));
-				//state.add(Integer.toString(pin.getPosY()));
+				state.add(pin.getPathType().name());
+				state.add(Integer.toString(pin.getPathNum()));
+				state.add(Integer.toString(pin.getInitialPos()));
 			}
 		}
 		return String.join(",", state);
@@ -102,10 +93,31 @@ public abstract class GameState {
 
 	static void loadState(String fullLoadedState) {
 		String[] st = fullLoadedState.split(",");
-		Player playerOne = new Player(st[4], st[5], st[6], st[7], st[8], st[9], st[10], st[11], st[12]);
-		Player playerTwo = new Player(st[13], st[14], st[15], st[16], st[17], st[18], st[19], st[20], st[21]);
-		Player playerThree = new Player(st[22], st[23], st[24], st[25], st[26], st[27], st[28], st[29], st[30]);
-		Player playerFour = new Player(st[31], st[32], st[33], st[34], st[35], st[36], st[37], st[38], st[39]);
+		
+		Pin pOnePOne = new Pin(st[5], Integer.parseInt(st[6]), Integer.parseInt(st[7]));
+		Pin pTwoPOne = new Pin(st[8], Integer.parseInt(st[9]), Integer.parseInt(st[10]));
+		Pin pThreePOne = new Pin(st[11], Integer.parseInt(st[12]), Integer.parseInt(st[13]));
+		Pin pFourPOne = new Pin(st[14], Integer.parseInt(st[15]), Integer.parseInt(st[16]));
+		Player playerOne = new Player(Integer.parseInt(st[4]), pOnePOne, pTwoPOne, pThreePOne, pFourPOne);
+		
+		Pin pOnePTwo = new Pin(st[18], Integer.parseInt(st[19]), Integer.parseInt(st[20]));
+		Pin pTwoPTwo = new Pin(st[21], Integer.parseInt(st[22]), Integer.parseInt(st[23]));
+		Pin pThreePTwo = new Pin(st[24], Integer.parseInt(st[25]), Integer.parseInt(st[26]));
+		Pin pFourPTwo = new Pin(st[27], Integer.parseInt(st[28]), Integer.parseInt(st[29]));
+		Player playerTwo = new Player(Integer.parseInt(st[17]), pOnePTwo, pTwoPTwo, pThreePTwo, pFourPTwo);
+		
+		Pin pOnePThree = new Pin(st[31], Integer.parseInt(st[32]), Integer.parseInt(st[33]));
+		Pin pTwoPThree = new Pin(st[34], Integer.parseInt(st[35]), Integer.parseInt(st[36]));
+		Pin pThreePThree = new Pin(st[37], Integer.parseInt(st[38]), Integer.parseInt(st[39]));
+		Pin pFourPThree = new Pin(st[40], Integer.parseInt(st[41]), Integer.parseInt(st[42]));
+		Player playerThree = new Player(Integer.parseInt(st[30]), pOnePThree, pTwoPThree, pThreePThree, pFourPThree);
+		
+		Pin pOnePFour = new Pin(st[44], Integer.parseInt(st[45]), Integer.parseInt(st[46]));
+		Pin pTwoPFour = new Pin(st[47], Integer.parseInt(st[48]), Integer.parseInt(st[49]));
+		Pin pThreePFour = new Pin(st[50], Integer.parseInt(st[51]), Integer.parseInt(st[52]));
+		Pin pFourPFour = new Pin(st[53], Integer.parseInt(st[54]), Integer.parseInt(st[55]));
+		Player playerFour = new Player(Integer.parseInt(st[43]), pOnePFour, pTwoPFour, pThreePFour, pFourPFour);
+		
 		
 		GameState.turnPlayer = Integer.parseInt(st[0]); 
 		GameState.round = Integer.parseInt(st[1]);
