@@ -1,7 +1,6 @@
 package View;
 
 import Controler.Controler;
-import Services.ButtonManagers;
 
 public abstract class ViewMaster {
 	private final static int LARG_DEFAULT = 960;

@@ -1,4 +1,4 @@
-package Services;
+package View;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,7 +12,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import Controler.Observer;
-import View.SideMenu;
+import Services.ServiceFacade;
 
 public class ButtonManagers implements Observer {
 	
