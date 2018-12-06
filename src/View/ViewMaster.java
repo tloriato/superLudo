@@ -1,6 +1,7 @@
 package View;
 
 import Controler.Controler;
+import Services.ButtonManagers;
 
 public abstract class ViewMaster {
 	private final static int LARG_DEFAULT = 960;
@@ -10,9 +11,13 @@ public abstract class ViewMaster {
 	private static SideMenu sideMenu = null;
 	private static Controler controler= null;
 	private static CentralPanel centralPanel = null;
+	private static ButtonManagers buttonManagers = null;
 	
 	public static void InitializeView() {
 		sideMenu = SideMenu.createSideMenu(LARG_DEFAULT, 720);
+		buttonManagers = new ButtonManagers();
+		sideMenu.register(buttonManagers);
+		
 		controler = Controler.createControler();
 		centralPanel = CentralPanel.createCentralPanel(720);
 		f = PrimFrame.createPrimFrame(LARG_DEFAULT,ALT_DEFAULT);
