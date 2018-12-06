@@ -3,14 +3,10 @@ import java.awt.*;
 import java.awt.geom.*;
 
 public class Tabuleiro {
-	/**
-	 * 
-	 */
-	//private static final long serialVersionUID = 1L;
+
 	private int boardSize;
 	private int squareSize;
 	private static Tabuleiro tabuleiro = null;
-	//private int squareNumbers=15;
 	
 	private Tabuleiro(int size) {
 		this.boardSize = size;
@@ -29,8 +25,6 @@ public class Tabuleiro {
 	}
 	
 	public void drawBoard(Graphics2D g2d) {
-		//super.paintComponent(g);
-		//g.drawString("Primeiro Programa Gráfico",TXT_X,TXT_Y);
 		
 		Rectangle2D[][] board=new Rectangle2D[15][15];
 		
@@ -120,14 +114,5 @@ public class Tabuleiro {
 		g2d.setPaint(color);
 		g2d.fill(r);
 		
-	}
-	
-	private void makeCenter(int x,int y, int size,Graphics2D g2d,Color color ) {
-		makeSquare(x*size,y*size,size, g2d, color);
-		makeSquare((x+1)*size,y*size,size, g2d, color);
-		makeSquare((x+1)*size,(y+1)*size,size, g2d, color);
-		makeSquare(x*size,(y+1)*size,size, g2d, color);
-	}
-	
-	
+	}	
 }

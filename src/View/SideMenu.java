@@ -33,14 +33,14 @@ public class SideMenu extends Panel {
 	
 	private ActionListener saveDialog = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // Abre no diret�rio Desktop
+			JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
 			fileChooser.setDialogTitle("Onde desejar salvar o jogo: ");
-			fileChooser.setAcceptAllFileFilterUsed(false);												// Filtra para mostrar arquivos .ssf
+			fileChooser.setAcceptAllFileFilterUsed(false);												
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("SuperLudo Save File", "ssf");
-			fileChooser.addChoosableFileFilter(filter);													// Amarra filtro � janela
-			int file = fileChooser.showSaveDialog(null);												// Efetivamente abre a janela
+			fileChooser.addChoosableFileFilter(filter);													
+			int file = fileChooser.showSaveDialog(null);												
 			if (file == JFileChooser.APPROVE_OPTION) {
-				String saveFilePath = fileChooser.getSelectedFile().toString();							// Monta string do arquivo pra salvar
+				String saveFilePath = fileChooser.getSelectedFile().toString();							
 				if (!saveFilePath.substring(saveFilePath.length() - 4).equals(".ssf")) {
 					System.out.println(saveFilePath.substring(saveFilePath.length() - 4));
 					saveFilePath = saveFilePath + ".ssf";

@@ -138,4 +138,6 @@ public class PlayingDice extends Panel {
 		SideMenu.throwDice.setEnabled(true);
 		SideMenu.diceNumbers.setEnabled(true);
 	}
+
+		
 }

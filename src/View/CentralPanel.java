@@ -23,8 +23,7 @@ public class CentralPanel extends JPanel {
 	}
 	
 	public void paintComponent(Graphics g) {
-		//super.paintComponent(g);
-		//g.drawString("Primeiro Programa Gráfico",TXT_X,TXT_Y);
+
 		super.paintComponent(g);
 		Graphics2D g2d=(Graphics2D) g;
 		this.t.drawBoard(g2d);

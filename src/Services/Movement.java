@@ -146,10 +146,10 @@ public abstract class Movement {
 		Barrier.leaveBarrier(p);
 		
 		if(p.getPathType() == Path.Common) {
-			if(enterLastRoad( playerNum,destiny, p.getPathNum(), p))
+			if (enterLastRoad( playerNum,destiny, p.getPathNum(), p))
 				return false;
-			if(destiny>51)
-				destiny= destiny -52;
+			if (destiny>51)
+				destiny= destiny -52;	
 			p.setPathNum(destiny);
 		}
 		
