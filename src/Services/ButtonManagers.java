@@ -24,19 +24,24 @@ public class ButtonManagers implements Observer {
 		int nounce = SideMenu.getNounce();
 		
 		if (nounce > this.nounce) {
-			switch(action) {
-			case 0:
+			if (action == 0) {
 				resetButton();
-				updateNounce();
-			case 1:
+				updateNounce();				
+			}
+			
+			else if (action == 1) {
 				loadButton();
-				updateNounce();
-			case 2:
+				updateNounce();				
+			}
+			
+			else if (action == 2) {
 				saveButton();
-				updateNounce();
-			case 3:
+				updateNounce();				
+			}
+			
+			else if (action == 3) {
 				throwButton();
-				updateNounce();
+				updateNounce();				
 			}
 		}		
 	}
