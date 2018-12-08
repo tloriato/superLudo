@@ -142,6 +142,14 @@ public abstract class Movement {
 		
 	}
 	
+	static Pin getLastSelected() {
+		return lastSelected;
+	}
+	
+	static void setLastSelected(Pin p) {
+		lastSelected = p;
+	}
+	
 	private static boolean move (Pin p) {
 		//System.out.println(p.getPathNum());
 		//System.out.println(GameState.getDice());
