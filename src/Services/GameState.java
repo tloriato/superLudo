@@ -6,6 +6,7 @@ import java.util.List;
 import Models.Path;
 import Models.Pin;
 import Models.Player;
+import View.CentralPanel;
 import View.ViewMaster;
 
 public abstract class GameState {
