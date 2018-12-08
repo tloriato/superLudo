@@ -79,7 +79,7 @@ public abstract class GameState {
 		int pos2, pos3, pos4;
 		int[] numPins= new int[4];
 		int[] positions= new int[4];
-		numPins[0]=-1;numPins[2]=-1;numPins[3]=-1;numPins[4]=-1;
+		numPins[0]=-1;numPins[1]=-1;numPins[2]=-1;numPins[3]=-1;
 				
 		for (Player pl :  GameState.getPlayers()) {
 			numPins[pl.getNumber()-1] = getNumberOfPinsEnd(pl);
@@ -91,8 +91,9 @@ public abstract class GameState {
 				if(n>pins)
 					countAbove++;
 			}
-			positions[numPins[pl.getNumber()-1]]=countAbove;
+			positions[pl.getNumber()-1]=countAbove;
 		}
+		
 		
 		CentralPanel.finalizeGame(positions, numPins);
 		
