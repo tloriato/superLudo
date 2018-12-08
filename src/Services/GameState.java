@@ -123,6 +123,9 @@ public abstract class GameState {
 				state.add(Integer.toString(pin.getInitialPos()));
 			}
 		}
+		state.add(Movement.getLastSelected().getPathType().name());
+		state.add(Integer.toString(Movement.getLastSelected().getPathNum()));
+		state.add(Integer.toString(Movement.getLastSelected().getInitialPos()));
 		return String.join(",", state);
 	}
 
@@ -153,7 +156,10 @@ public abstract class GameState {
 		Pin pFourPFour = new Pin(st[53], Integer.parseInt(st[54]), Integer.parseInt(st[55]));
 		Player playerFour = new Player(Integer.parseInt(st[43]), pOnePFour, pTwoPFour, pThreePFour, pFourPFour);
 		
+		Pin lastSelected = new Pin(st[56], Integer.parseInt(st[57]), Integer.parseInt(st[58]));
 		
+		
+		Movement.setLastSelected(lastSelected);
 		GameState.turnPlayer = Integer.parseInt(st[0]); 
 		GameState.round = Integer.parseInt(st[1]);
 		GameState.lastDice = Integer.parseInt(st[2]);
