@@ -22,8 +22,6 @@ import Controler.Subject;
 import Services.ServiceFacade;
 
 public class SideMenu extends Panel implements Subject {
-	
-	private static final long serialVersionUID = -3469803300168088129L;
 	public static PlayingDice playingDice = null;
 	private static SideMenu sideMenu = null;
 	public static JButton throwDice = null;

@@ -3,9 +3,6 @@ import java.awt.*;
 import javax.swing.*;
 
 public class PrimFrame extends JFrame {
-	/**
-	 * Hello World of GUI 
-	 */
 	private static PrimFrame primFrame = null;
 	private static final long serialVersionUID = 1L;
 	
