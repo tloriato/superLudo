@@ -89,7 +89,7 @@ public class ButtonManagers implements Observer {
 		if (file == JFileChooser.APPROVE_OPTION) {
 			String saveFilePath = fileChooser.getSelectedFile().toString();							
 			if (!saveFilePath.substring(saveFilePath.length() - 4).equals(".ssf")) {
-				System.out.println(saveFilePath.substring(saveFilePath.length() - 4));
+				//System.out.println(saveFilePath.substring(saveFilePath.length() - 4));
 				saveFilePath = saveFilePath + ".ssf";
 			}
 			try {

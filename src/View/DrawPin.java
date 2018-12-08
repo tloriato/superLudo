@@ -45,8 +45,8 @@ public abstract class DrawPin {
 		}
 		
 		ArrayList<Barrier> b =Barrier.getBarriers();
-		System.out.println(b);
-		System.out.println(b.size());
+		//System.out.println(b);
+		//System.out.println(b.size());
 		for(int i=0;i<b.size();i++) {
 			drawBarrier(g2d, b.get(i),squareSize);
 		}
@@ -104,7 +104,7 @@ public abstract class DrawPin {
 	static void findPin(int posX, int posY) {
 		for(int i=0;i<16;i++) {
 			if(posX==positions[i][0] && posY==positions[i][1] ) {
-				System.out.println(pins[i]);
+				//System.out.println(pins[i]);
 				ServiceFacade.select(pins[i]);
 				if(players[i]==ServiceFacade.getTurnPlayer().getNumber())
 					break;

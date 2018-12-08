@@ -14,7 +14,7 @@ public abstract class Movement {
 	static void select(Pin pin) {
 		int dice =GameState.getDice();
 		if(dice==0) {
-			System.out.println("Jogue o Dado");
+			//System.out.println("Jogue o Dado");
 			return;
 		}
 		if(!checkForMove(pin)) {
@@ -97,7 +97,9 @@ public abstract class Movement {
 		
 		if(pin==null) {
 			GameState.nextTurn();
+			return;
 		}
+
 		
 		if(move(pin)) {
 			GameState.setDice(0);
@@ -141,6 +143,8 @@ public abstract class Movement {
 	}
 	
 	private static boolean move (Pin p) {
+		//System.out.println(p.getPathNum());
+		//System.out.println(GameState.getDice());
 		int destiny = p.getPathNum() + GameState.getDice();
 		int playerNum = GameState.getTurnPlayer().getNumber();
 		Barrier.leaveBarrier(p);
@@ -156,6 +160,8 @@ public abstract class Movement {
 		if(p.getPathType() == Path.LastRoad) {
 			if(destiny ==5) {
 				p.setPath(Path.End);
+				ViewMaster.refreshBoard();
+				checkForWin();
 				return true;
 			}
 			else
@@ -323,5 +329,14 @@ public abstract class Movement {
 	
 	static boolean isExit(int n) {
 		return (n==13 || n== 26 || n==39 || n==0);
+	}
+	
+	static void checkForWin() {
+		Player pl =  GameState.getTurnPlayer();
+		for(Pin pin: pl.getPins()) {
+			if(pin.getPathType() != Path.End)
+				return;
+		}
+		GameState.endGame();
 	}
 }

@@ -2,6 +2,8 @@ package Services;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import Models.Path;
 import Models.Pin;
 import Models.Player;
 import View.ViewMaster;
@@ -70,6 +72,39 @@ public abstract class GameState {
 	
 	static void zeroCountSix() {
 		countSix = 0;
+	}
+	
+	static void endGame() {
+		//Player pos1 = getTurnPlayer();
+		int pos2, pos3, pos4;
+		int[] numPins= new int[4];
+		int[] positions= new int[4];
+		numPins[0]=-1;numPins[2]=-1;numPins[3]=-1;numPins[4]=-1;
+				
+		for (Player pl :  GameState.getPlayers()) {
+			numPins[pl.getNumber()-1] = getNumberOfPinsEnd(pl);
+		}
+		for (Player pl :  GameState.getPlayers()) {
+			int countAbove =1;
+			int pins=numPins[pl.getNumber()-1];
+			for (int n : numPins) {
+				if(n>pins)
+					countAbove++;
+			}
+			positions[numPins[pl.getNumber()-1]]=countAbove;
+		}
+		
+		CentralPanel.finalizeGame(positions, numPins);
+		
+	}
+	
+	private static int getNumberOfPinsEnd(Player pl) {
+		int count=0;
+		for(Pin pin: pl.getPins()) {
+			if(pin.getPathType() ==Path.End)
+				count++;
+		}
+		return count;
 	}
 	
 	static String getFullState() {

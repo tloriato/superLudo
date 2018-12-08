@@ -74,7 +74,7 @@ public class PlayingDice extends Panel {
 					repaint();
 				}
 				else {
-					System.out.println("Dado ja foi jogado");
+					//System.out.println("Dado ja foi jogado");
 				}
 				ServiceFacade.forcedMove();
 				stable = true;
