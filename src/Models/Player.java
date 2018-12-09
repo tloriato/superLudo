@@ -1,7 +1,5 @@
 package Models;
 
-import java.util.ArrayList;
-
 public class Player {
 	private Pin[] pins= new Pin[4];
 	private int playerNumber;

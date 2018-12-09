@@ -9,8 +9,6 @@ import Models.Path;
 import Models.Pin;
 import Models.Player;
 import Services.Barrier;
-import Services.GameState;
-import Services.Movement;
 import Services.ServiceFacade;
 
 public abstract class DrawPin {

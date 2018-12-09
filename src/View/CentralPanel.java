@@ -1,9 +1,6 @@
 package View;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.plaf.ColorUIResource;
-
 import Services.ServiceFacade;
 
 import java.awt.*;

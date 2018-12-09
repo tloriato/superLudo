@@ -2,9 +2,6 @@ package Controler;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import Services.Movement;
-import View.DrawPin;
-import View.PlayingDice;
 import View.ViewMaster;
 
 
@@ -33,10 +30,6 @@ public class Controler implements  MouseListener {
 		int posX = x / 48;
 		int posY = (y - 26) /48;
 		
-		//System.out.println(x);
-		//System.out.println(y);
-		//System.out.println(posX);
-		//System.out.println(posY);
 		if(ViewMaster.isStable()) 
 			ViewMaster.findPin(posX, posY);
 	}

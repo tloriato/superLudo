@@ -7,19 +7,9 @@ import java.awt.Label;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
-
 import Controler.Observer;
 import Controler.Subject;
-import Services.ServiceFacade;
 
 public class SideMenu extends Panel implements Subject {
 	public static PlayingDice playingDice = null;

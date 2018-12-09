@@ -4,14 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-
-import Services.DiceLogic;
-import Services.GameState;
-import Services.Movement;
 import Services.ServiceFacade;
-
-import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("serial")
 public class PlayingDice extends Panel {

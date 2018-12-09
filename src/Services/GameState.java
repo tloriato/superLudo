@@ -76,8 +76,6 @@ public abstract class GameState {
 	}
 	
 	static void endGame() {
-		//Player pos1 = getTurnPlayer();
-		int pos2, pos3, pos4;
 		int[] numPins= new int[4];
 		int[] positions= new int[4];
 		numPins[0]=-1;numPins[1]=-1;numPins[2]=-1;numPins[3]=-1;
